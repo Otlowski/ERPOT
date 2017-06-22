@@ -1,0 +1,258 @@
+body {
+    width: 100%;
+    height: 100%;
+    min-width: 960px;
+    background-image: url("../../../static/img/App/background-image.jpg");
+    background-repeat: no-repeat;
+    background-attachment:fixed;
+    background-size: cover;
+    background-position: center center;
+}
+
+.main-header {
+    position:absolute;
+    width: 100%;
+    height: 45px;
+    min-width: 960px; 
+    margin: 0px;
+    background: rgba(0,0,0,0.8);
+}
+
+.main-header__h1 {
+    margin: 6px 15px 0px;
+    font-size: 24px;
+    font-family: 'Oxygen', sans-serif;
+    font-weight: 400;
+    color: #fff;
+}
+
+.main-content {
+    position: absolute;
+    top: 45px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    min-width: 960px;
+    min-height: 600px;
+    height: calc(100% - 90px);
+    height: -webkit-calc(100% - 90px);
+    height: -moz-calc(100% - 90px);
+    margin: 0px;
+    text-align: center;
+}
+
+.main-content__menu{
+    position: absolute;
+    width: 200px;
+    height: 100%;
+    background-color:black;
+    
+}
+
+.main-content__wrapper {
+    position: relative;
+    display: block;
+    top: 130px;
+    width: 420px;
+    margin: 0 auto; 
+}
+
+.main-footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    min-width: 960px;
+    height: 45px;
+    margin: 0;
+    padding: 0;
+    background: rgba(0,0,0,0.8);
+}
+
+.main-footer__links {
+    position: relative;
+    width: 100%;
+    text-align: right;
+    font-size: 12px;   
+    font-family: 'Oxygen', sans-serif;
+    font-weight: 300;
+    color: #fff;
+}
+.main-footer__links__item
+{
+    position: relative;
+    display: inline-block;
+     /*float: left;*/
+    height: 20px;
+    padding: 2px 15px 0px;
+    font-family: 'Oxygen', sans-serif;
+    font-size: 12px; 
+    font-weight: 300;
+    color: #fff;  
+}
+.main-footer__links__item::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    right: 0px;
+    width: 1px;
+    height: 14px;
+    background: #fff;
+}
+
+.main-footer__links__item:last-child::after {
+    display: none;
+}
+
+.main-footer__links__item__a,
+.main-footer__links__item > a  {
+    font-family: 'Oxygen', sans-serif;
+    font-size: 12px; 
+    color: #fff;  
+}
+
+.main-footer__links__item__a:hover,
+.main-footer__links__item > a:hover  {  
+    text-decoration: underline;
+    text-shadow: 1px 1px rgba(0,0,0,0.5);
+    color: #f1f1f1;
+}
+
+.main-footer__links__separator {
+    position: relative;
+    display: inline-block;
+    height: 15px;
+    width: 1px;
+    margin-top: 5px;
+    background: #fff;
+}
+
+.box-login {
+    position: relative;
+    display: inline-block;
+    width: 420px;
+    height: 400px;
+    margin-top: 50px;
+    background: rgba(255,255,255,1);
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0px 4px 9px 2px rgba(166,166,166,0.99);
+    -moz-box-shadow: 0px 4px 9px 2px rgba(166,166,166,0.99);
+    box-shadow: 0px 4px 9px 2px rgba(166,166,166,0.99);
+}
+
+.box-login__logo {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    margin: auto; 
+}
+.box-login__logo__logo-image{
+    position: absolute;
+    top:20px;
+    left: 0px;
+    right: 0px;
+    height: 80px;
+    z-index: 10; 
+    background: url('../../../static/img/App/erpot-logo.png') no-repeat center center;
+/*    background-position: -230px -12px; width: 93px; height: 93px;
+	margin: auto;*/
+}
+
+/*.box-login__logo__line-gray{
+    position: absolute;   
+    top: 20px;  
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 9;
+    background: url('../../../static/img/login/line-gray.png') no-repeat center center;
+}*/
+
+.box-login__form {
+    position:relative;
+    display: block;
+    width:100%;
+    height: auto;  
+    font-family: 'Oxygen', sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    color: #A9A9A9;
+}
+
+.box-login__button-login {
+    position: absolute; 
+    top: 58px; 
+    right: 45px; 
+    width: 40px; 
+    height: 40px; 
+    background: url('../../static/img/login-button.png') no-repeat;
+    background-position: 0px 0px;
+}
+
+.box-login__form__input {
+    display: inline-block;
+    width: 80%;
+    height: 42px;
+    margin-bottom: 13px ;
+    padding-left: 15px; 
+    font-size: 16px;
+    font-weight: normal;
+    color: #000;  
+    border:0.5px solid #A9A9A9;
+    border-radius: 5px;
+    outline: none;
+}
+.box-login__form__input::-webkit-input-placeholder,
+.box-login__form__input:-moz-placeholder,
+.box-login__form__input::-moz-placeholder,
+.box-login__form__input:-ms-input-placeholder {
+    font-size: 100;
+    color: #ccc;
+}
+
+.box-login__form__line-gray--down{
+    position: relative;
+    top: 0px;
+    width: 100%; 
+    height: 10px;
+    margin-bottom:13px;
+    /*background-position: -0px -0px; width: 399px; height: 12px;*/
+    background: url('../../../static/img/App/line-gray.png') no-repeat center center; 
+}
+
+.box-login__links {
+    position: relative;
+    display: block; 
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    font-family: 'Oxygen', sans-serif;
+    font-weight: bold;
+    font-size: 13px;
+    color: #A9A9A9;    
+}
+.box-login__links__item{
+    position: relative;
+    display: block;
+    width: 100%;
+    margin:auto;
+    font-family: 'Oxygen', sans-serif;
+    font-weight: 100;
+    font-size: 13px;
+    color: #A9A9A9;  
+}
+.box-login__links__item__a,
+.box-login__links__item > a  {
+    font-family: 'Oxygen', sans-serif;
+    font-size: 12px; 
+    color: #A9A9A9;
+}
+
+.box-login__links__item__a:hover,
+.box-login__links__item > a:hover  {
+    color: #A9A9A9;
+    text-decoration: underline;
+/*    text-shadow: 0.5px 0.5px rgba(0,0,0,0.2);   */
+}

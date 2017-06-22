@@ -1,0 +1,167 @@
+<?php
+
+namespace App\Http\Controllers\Questionnaires;
+
+use Illuminate\Http\Request;
+use Validator;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use App\Models\Questionnaires\QuestionnaireUser;
+
+class QuestionnairesUsersController extends Controller
+{
+    public function listQuestionnairesUsers(Request $request) {
+        
+        try {
+
+            $parameters = $request->all();
+            
+            $validator = Validator::make($request->all(), [
+                'ids'                            =>   'array',
+                'ids.*.id'                       =>   'integer'
+            ]);
+            
+            if ($validator->fails()) {
+                return self::responseJson($validator->errors()->all(), 'error');
+            }
+            
+            $query = QuestionnaireUser::whereNull('deleted_at');
+            
+            if (isset($parameters['ids'])) {
+                $query->whereIn('id', $parameters['ids']);
+            }
+            
+            $questionnairesUsers = $query->get();
+
+            if (!$questionnairesUsers) {
+                return self::responseJson('Table "questionnaires_users" is empty', 'error');
+            }
+            
+            $response = $questionnairesUsers;
+            
+            return self::responseJson($response);
+        } catch (Exception $ex) {
+            return self::responseJson($ex->getMessage(), 'error');
+        }
+    }
+    
+    public function addQuestionnaireUser(Request $request) {
+        
+        try {    
+
+            $parameters = $request->all();
+
+            $validator = Validator::make($request->all(), [
+                'create'                                 =>   'required|array',
+                'create.*.questionnaires__object_id'     =>   'string',
+                'create.*.users__object_id'              =>   'string',
+                'create.*.trainings_users__id'           =>   'integer',
+                'create.*.status'                        =>   'string'
+            ]);
+
+            if ($validator->fails()) {
+                return self::responseJson($validator->errors()->all(), 'error');
+            }
+            
+            $created = [];
+            \DB::beginTransaction();
+            foreach($parameters['create'] as $index => $param) {
+                $questionnaireUser = new QuestionnaireUser($param);
+                $questionnaireUser->save();
+                $created[] = $questionnaireUser;
+            }
+            \DB::commit();
+            
+            $response = [
+                'created' => $created,
+                'deleted' => []
+            ];
+            
+            return self::responseJson($response);
+            
+        } catch (Exception $ex) {
+            \DB::rollback();
+            return self::responseJson($ex->getMessage(), 'error');
+        }
+    }
+    
+    public function updateQuestionnaireUser(Request $request) {
+        
+        try {    
+
+            $parameters = $request->all();
+
+            $validator = Validator::make($request->all(), [
+                'create'                                 =>   'required|array',
+                'create.*.id'                            =>   'required|integer|exists:questionnaires_users,id',
+                'create.*.questionnaires__object_id'     =>   'string',
+                'create.*.users__object_id'              =>   'string',
+                'create.*.trainings_users__id'           =>   'integer',
+                'create.*.status'                        =>   'string'
+            ]);
+
+            if ($validator->fails()) {
+                return self::responseJson($validator->errors()->all(), 'error');
+            }
+            
+            $updated = [];
+            \DB::beginTransaction();
+            foreach($parameters['create'] as $index => $param) {
+                $questionnaireUser = QuestionnaireUser::where('id', $param['id'])->first();
+                $questionnaireUser->update($param);
+                $updated[] = $questionnaireUser;
+            }
+            \DB::commit();
+            
+            $response = [
+                'updated'   =>  $updated
+            ];
+            
+            return self::responseJson($response);
+            
+        } catch (Exception $ex) {
+            \DB::rollback();
+            return self::responseJson($ex->getMessage(), 'error');
+        }
+    }
+    
+    public function deleteQuestionnaireUser(Request $request) {
+        
+        try {    
+
+            $parameters = $request->all();
+
+            $validator = Validator::make($request->all(), [
+                'delete'                =>    'required|array',
+                'delete.*.id'           =>    'required|integer|exists:questionnaires_users,id'
+            ]);
+
+            if ($validator->fails()) {
+                return self::responseJson($validator->errors()->all(), 'error');
+            }
+            
+            $deleted = [];
+            \DB::beginTransaction();
+            foreach($parameters['delete'] as $index => $param) {
+                $questionnaireUser = QuestionnaireUser::where('id', $param['id'])->first();
+//                if (!$questionnairesUser) {
+//                    self::responseJson($index.' element is incorrect..', 'error');
+//                }
+                $deleted[] = $questionnaireUser;
+                $questionnaireUser->delete();
+            }
+            \DB::commit();
+
+            $response = [
+                'created' => [],
+                'deleted' => $deleted
+            ];
+            
+            return self::responseJson($response);
+            
+        } catch (Exception $ex) {
+            \DB::rollback();
+            return self::responseJson($ex->getMessage(), 'error');
+        }
+    }
+}

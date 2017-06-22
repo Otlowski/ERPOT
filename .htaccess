@@ -1,0 +1,23 @@
+RewriteEngine On
+
+# Redirect to SSL mode
+# RewriteCond %{HTTPS} !=on
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Remove prefix www for all sites
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
+RewriteRule ^\.htaccess$ - [F]
+
+RewriteCond %{REQUEST_URI} =""
+RewriteRule ^.*$ /public/index.php [NC,L]
+
+RewriteCond %{REQUEST_URI} !^/public/.*$
+RewriteRule ^(.*)$ /public/$1
+
+RewriteCond %{REQUEST_FILENAME} -f
+
+RewriteRule ^.*$ - [NC,L]
+
+RewriteRule ^public/.*$ /public/index.php [NC,L]
