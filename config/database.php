@@ -57,7 +57,7 @@ return [
             'unix_socket' => env('DB_MYSQL_SOCK', ''),
             'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'erpot'),
+            'database' => env('DB_DATABASE', 'marenco_erp_training'),
             'username' => env('DB_USERNAME', 'root'),
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
