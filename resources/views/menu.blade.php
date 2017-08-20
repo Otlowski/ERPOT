@@ -23,23 +23,6 @@
                 </a>
             </div>
             <div class="menu-item">
-                <a href="#" >
-                <div class="menu-item__content ">
-                    <div class="menu-item__icon menu-item__icon--questionnaires col col-20">
-
-                    </div>
-                    <div class="col col-80">
-                        <div class="menu-item__name">
-                        Questionnaires
-                        </div>
-                        <div class="menu-item__description">
-                        Desc2
-                        </div>
-                    </div>
-                </div>
-                </a>
-            </div>
-            <div class="menu-item">
                 <a href="/rooms" >
                 <div class="menu-item__content ">
                     <div class="menu-item__icon menu-item__icon--rooms col col-20">
@@ -60,7 +43,7 @@
                 <a href="/calendar" >
                 <div class="menu-item__content ">
                     <div class="menu-item__icon menu-item__icon--calendar col col-20">
-                    
+
                     </div>
                     <div class="col col-80">
                         <div class="menu-item__name">
@@ -102,23 +85,6 @@
                         </div>
                         <div class="menu-item__description">
                         Desc6
-                        </div>
-                    </div>
-                </div>
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="/reports/trainings" >
-                <div class="menu-item__content ">
-                    <div class="menu-item__icon menu-item__icon--reports col col-20">
-
-                    </div>
-                    <div class="col col-80">
-                        <div class="menu-item__name">
-                        Reports
-                        </div>
-                        <div class="menu-item__description">
-                        Desc7
                         </div>
                     </div>
                 </div>

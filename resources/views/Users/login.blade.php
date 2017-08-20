@@ -16,16 +16,17 @@
     </div>
     <div class="col-xs-4">
     </div>
-</div>       
+</div>
 <div class="main-content">
     <div class="main-content__wrapper">
         <div id="box-login" class="box-login" data-function="box-login">
             <div class="box-login__logo">
-                <div class="box-login__logo__logo-image"> </div>                  
-            </div> 
-            <div class="box-login__form">                    
+                <div class="box-login__logo__logo-image"> </div>
+                <!-- <h1>Erpot</h1> -->
+            </div>
+            <div class="box-login__form">
                 <input type="email" name="email" placeholder="Enter your e-mail" class="box-login__form__input"><br>
-                <input type="password" name="password" placeholder="Password" class="box-login__form__input"><br> 
+                <input type="password" name="password" placeholder="Password" class="box-login__form__input"><br>
                 <!--<div class="box-login__button-login" data-function="button-login" style=""></div>-->
                 <div class="box-login__form__line-gray--down"></div>
                 <button class="btn btn-block btn-danger" data-function="button-login">Login</button>
@@ -36,20 +37,20 @@
             </div>
         </div>
     </div>
-</div>       
-<div class="main-footer col">
+</div>
+<!-- <div class="main-footer col">
     <div class="col-xs-12">
         <div class="main-footer__links">
-            <div class="main-footer__links__item"><a href="#">Server & system</a></div>
+            <div class="main-footer__links__item"><a href="#">Server & system</a></div>-->
             <!--<div class="main-footer__links__separator"></div>-->
-            <div class="main-footer__links__item"><a href="#">Marenco Wiki</a></div>
+            <!-- <div class="main-footer__links__item"><a href="#">Marenco Wiki</a></div> -->
             <!--<div class="main-footer__links__separator"></div>-->
-            <div class="main-footer__links__item"><a href="mailto:developers@t-media.pl">Developer contact</a></div>
+            <!-- <div class="main-footer__links__item"><a href="mailto:developers@t-media.pl">Developer contact</a></div> -->
             <!--<div class="main-footer__links__separator"></div>-->
-            <div class="main-footer__links__item">Copyright &copy <?= date("Y") ?> T-Media</div>
-        </div>
-    </div>
-</div>
+            <!-- <div class="main-footer__links__item">Copyright &copy <?= date("Y") ?> T-Media</div> -->
+        <!-- </div> -->
+    <!-- </div> -->
+<!-- </div> -->
 @endsection
 
 @section('scripts')
