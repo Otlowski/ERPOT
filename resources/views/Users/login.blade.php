@@ -25,16 +25,19 @@
                 <!-- <h1>Erpot</h1> -->
             </div>
             <div class="box-login__form">
+              <form action="{{route('login')}}" method="post">
                 <input type="email" name="email" placeholder="Enter your e-mail" class="box-login__form__input"><br>
-                <input type="password" name="password" placeholder="Password" class="box-login__form__input"><br>
-                <!--<div class="box-login__button-login" data-function="button-login" style=""></div>-->
+                <input type="password" id="password" name="password" placeholder="Password" class="box-login__form__input"><br>
                 <div class="box-login__form__line-gray--down"></div>
-                <button class="btn btn-block btn-danger" data-function="button-login">Login</button>
+                <button class="btn btn-block btn-danger" type="submit" data-function="button-login">Login</button>
+                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
+              </form>
             </div>
             <div class="box-login__links">
                 <div class="box-login__links__item"><a href="/passwordChange">Change your password to Training App.</a></div><br>
                 <div class="box-login__links__item"><a href="/register">Do not have account to Training App? Register now.</a></div>
             </div>
+
         </div>
     </div>
 </div>

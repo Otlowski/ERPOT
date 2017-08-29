@@ -14,17 +14,18 @@ use App\Models\Users\User;
 use App\Models\Users\UserMail;
 use App\Models\Users\UserSession;
 use App\Models\Users\UserRegisterHash;
+use App\Http\Controllers\Users\UsersController;
 
 class UsersController extends Controller
-{   
-    
+{
+
     public $moduleParams = [
         'moduleId'      => null,
         'moduleCode'    => null
     ];
-        
+
     public function registerUser(Request $request) {
-        
+
         try {
 
             $parameters = $request->all();
@@ -39,16 +40,6 @@ class UsersController extends Controller
             if ($validator->fails()) {
                 return self::responseJson($validator->errors(), 'error');
             }
-
-//            $user = User::where('email', $parameters['email'])->first();
-//
-//            if ($user && $user->isActivated()) {
-//                return self::responseJson("This account is created", 'error');
-//            }
-//
-//            if ($user && $user->isRegistered()) {
-//                return self::responseJson("This account is inactivated.. Check your mailbox and click the link to activate account..", 'error');
-//            }
 
             $newUser = new User($parameters);
             $newUser->status = 'inactivated';
@@ -65,66 +56,66 @@ class UsersController extends Controller
                 'created' => [$newUser, $userRegisterHash],
                 'deleted' => []
             ];
-            
+
             return self::responseJson($response);
         } catch (Exception $ex) {
             return self::responseJson($ex, 'error');
         }
     }
-    
+
     public function verifyRegisterLink($hash) {
-        
+
         $userRegisterHash = UserRegisterHash::where('hash', $hash)->first();
-        
+
         if (!$userRegisterHash) {
             return self::responseJson('Link doesn\'t exists..', 'error');
         }
-        
+
         if (Carbon::now() > $userRegisterHash->finish_at) {
             return self::responseJson('Link expires..', 'error');
         }
-        
+
         $user = User::where('object_id', $userRegisterHash->users__object_id)->first();
-        
+
         if (!$user) {
             return self::responseJson('User not found..', 'error');
         }
-        
+
         $user->status = 'activated';
         $user->save();
-        
+
         $response = [
             'created' => [],
             'deleted' => [$userRegisterHash]
         ];
-        
+
         $userRegisterHash->delete();
-        
+
         return self::responseJson($user);
     }
-    
+
     public function refreshRegisterHash($user) {
-        
+
         $deleted = [];
         $userRegisterHash = UserRegisterHash::where('users__object_id', $user->object_id)->first();
         if ($userRegisterHash->isActive()) {
             $deleted[] = $userRegisterHash;
             $userRegisterHash->delete();
         }
-        
+
         $newUserRegisterHash = UserRegisterHash::createRegisterHash($user);
         self::sendVerificationMail($user);
-        
+
         $response = [
             'created' => [$newUserRegisterHash],
             'deleted' => $deleted
         ];
-        
+
         return self::responseJson($response);
     }
-    
+
     public function login(Request $request) {
-        
+
         try {
 
             $parameters = $request->all();
@@ -134,46 +125,54 @@ class UsersController extends Controller
                 'password'           =>      'required'
             ]);
 
-            if ($validator->fails()) {
-                return self::responseJson($validator->errors(), 'error');
+            // if ($validator->fails()) {
+            //     return self::responseJson($validator->errors(), 'error');
+            // }
+            // $user = User::where('email', $parameters['email'])->first();
+            dd($request['email'].' '. request['password']);
+            if(Auth::attempt(['email' =>$request['email'],['password'] =>$request['password']]){
+            //     return redirect()->route('dashboard');
+            })else {
+            //
+            // s/    return back();
             }
 
-            $user = User::where('email', $parameters['email'])->first();
+            //
+            //
+            //
+            // if (!$user) {
+            //     return self::responseJson('User not found..', 'error');
+            // }
+            //
+            // if (!$user->isCorrectPassword($parameters['password'])) {
+            //     return self::responseJson('Incorrect password..', 'error');
+            // }
+            //
+            // if (!$user->isActivated()) {
+            //     return self::responseJson("This account is inactivated.. Check your mailbox and click the link to activate account..", 'error');
+            // }
+            //
+            // // create active session for user
+            // $userSession = UserSession::createUserSession($user);
+            // $user->active_session = $userSession;
+            //
+            // $response = [
+            //     'created' => [$user],
+            //     'deleted' => []
+            // ];
 
-            if (!$user) {
-                return self::responseJson('User not found..', 'error');
-            }
-
-            if (!$user->isCorrectPassword($parameters['password'])) {
-                return self::responseJson('Incorrect password..', 'error');
-            }
-
-            if (!$user->isActivated()) {
-                return self::responseJson("This account is inactivated.. Check your mailbox and click the link to activate account..", 'error');
-            }
-            
-            // create active session for user
-            $userSession = UserSession::createUserSession($user);
-            $user->active_session = $userSession;
-            
-            $response = [
-                'created' => [$user],
-                'deleted' => []
-            ];
-
-            return self::responseJson($response);
 
         } catch(Excaption $ex) {
             return self::responseJson($ex->getMessage(), 'error');
         }
     }
-    
+
     public function logout(Reques $request) {
-        
+
         try {
 
             $parameters = $request->all();
-            
+
             $validator = \Validator::make($request->all(), [
                 'hash'              =>      'string|size:128',
             ]);
@@ -181,7 +180,7 @@ class UsersController extends Controller
             if ($validator->fails()) {
                 return self::responseJson($validator->errors(), 'error');
             }
-            
+
             $hash = $parameters['hash'];
 
             $session = UserSession::getSessionWithHash($hash);
@@ -195,12 +194,12 @@ class UsersController extends Controller
             $user->hash = '';
             $session->save();
             $user->save();
-            
+
             $response = [
                 'created' => [],
                 'deleted' => [$session]
             ];
-            
+
             $session->delete();
 
             return self::responseJson($response);
@@ -209,11 +208,11 @@ class UsersController extends Controller
             return self::responseJson($ex->getMessage(), 'error');
         }
     }
-    
+
     public function isLogged (Request $request) {
-        
+
         $parameters = $request->all();
-        
+
         $validator = \Validator::make($request->all(), [
             'hash'              =>      'string|size:128',
         ]);
@@ -221,21 +220,21 @@ class UsersController extends Controller
         if ($validator->fails()) {
             return self::responseJson($validator->errors(), 'error');
         }
-        
+
         $hash = $parameters['hash'];
         $session = UserSession::getSessionWithHash($hash);
-        
+
         if (!$session) {
             return self::responseJson('Session not found..', 'error');
         }
-        
+
         $session->refreshSession();
-        
+
         return self::responseJson($session);
     }
-    
+
     public function testMailSending(Request $request) {
-        
+
         try {
 
             $validator = \Validator::make($request->all(), [
@@ -255,16 +254,16 @@ class UsersController extends Controller
                 $message->from('notifications@t-media.pl', 'notifications');
                 $message->to($email, $receiver)->subject('testing mail sending');
             });
-            
+
             return self::responseJson('Test mail sended to '.$receiver);
 
         } catch(Excaption $ex) {
             return self::responseJson($ex->getMessage(), 'error');
         }
     }
-    
+
     public static function sendVerificationMail($user) {
-        
+
         try {
 
             $userRegisterHash = UserRegisterHash::createRegisterHash($user);
@@ -294,7 +293,7 @@ class UsersController extends Controller
 //                'created' => [$verificationMail, $userRegisterHash],
 //                'deleted' => []
 //            ];
-//            
+//
 //            return self::responseJson($response);
             return $userRegisterHash;
 
@@ -302,9 +301,9 @@ class UsersController extends Controller
             return null;
         }
     }
-    
+
     public function listUsers(Request $request) {
-        
+
         try {
 
             $parameters = $request->all();
@@ -317,54 +316,50 @@ class UsersController extends Controller
                 'object_ids'                          =>   'array',
                 'object_ids.*.object_id'              =>   'string'
             ]);
-            
+
             if ($validator->fails()) {
                 return self::responseJson($validator->errors()->all(), 'error');
             }
-            
+
             $query = User::whereNull('deleted_at');
-            
+
             if (isset($parameters['users_groups__id']) && $parameters['users_groups__id']) {
                 $query->where('users_groups__id', '=', $parameters['users_groups__id']);
             }
             // append all user session
             if (isset($parameters['with_users_sessions']) && $parameters['with_users_sessions']) {
                 $query->with('userSession');
-                
+
             }
             // append user send emails
             if (isset($parameters['with_users_mails']) && $parameters['with_users_mails']) {
                 $query->with('userMail');
             }
-            
+
             if (isset($parameters['with_users_register_hashes']) && $parameters['with_users_register_hashes']) {
                 $query->with('userRegisterHash');
             }
-            
+
             if (isset($parameters['object_ids'])) {
                 $query->whereIn('object_id', $parameters['object_ids']);
             }
-            
+
             $users = $query->orderBy('name', 'asc')->get();
-//            foreach($users as &$user) {
-//                $user->user_session_active = $user->userSessionActive();
-//            }
-            
             if (!$users) {
                 return self::responseJson('Table "users" is empty', 'error');
             }
 
             $response = $users;
-            
+
             return self::responseJson($response);
         } catch (Exception $ex) {
             return self::responseJson($ex->getMessage(), 'error');
         }
     }
-    
+
     public function addUser(Request $request) {
-        
-        try {    
+
+        try {
 
             $parameters = $request->all();
 
@@ -384,7 +379,7 @@ class UsersController extends Controller
             if ($validator->fails()) {
                 return self::responseJson($validator->errors()->all(), 'error');
             }
-            
+
             $created = [];
             \DB::beginTransaction();
             foreach($parameters['create'] as $index => $param) {
@@ -396,25 +391,25 @@ class UsersController extends Controller
                 $created[$index] = $user;
             }
             \DB::commit();
-            
+
             $response = [
                 'created'   =>  $created,
                 'deleted'   =>  []
             ];
-            
+
             return self::responseJson($response);
-            
+
         } catch (Exception $ex) {
             \DB::rollback();
             return self::responseJson($ex->getMessage(), 'error');
         }
     }
-    
-    public function updateUser(Request $request) {
-        
-        try {    
 
-            $parameters = $request->all(); 
+    public function updateUser(Request $request) {
+
+        try {
+
+            $parameters = $request->all();
             $validator = Validator::make($request->all(), [
                 'create'                            =>   'required|array',
                 'create.*.object_id'                =>   'required|string|exists:users,object_id',
@@ -426,13 +421,13 @@ class UsersController extends Controller
                 'create.*.lastname'                 =>   'string',
                 'create.*.is_admin'                 =>   'boolean',
                 'create.*.status'                   =>   'string',
-                'create.*.users_groups__id'         =>   'string',  
+                'create.*.users_groups__id'         =>   'string',
             ]);
 
             if ($validator->fails()) {
                 return self::responseJson($validator->errors(), 'error','error');
             }
-            
+
             $created = [];
             $deleted = [];
             \DB::beginTransaction();
@@ -441,8 +436,8 @@ class UsersController extends Controller
 //                if (!$user) {
 //                    self::responseJson($index.' element is incorrect..', 'error');
 //                }
-      
-                //reate new object to show what just has been deleted 
+
+                //reate new object to show what just has been deleted
                 $deletedUser = new User();
                 $deletedUser->id = $user->id;
                 $deletedUser->username = $user->username;
@@ -460,28 +455,28 @@ class UsersController extends Controller
                 $newUser->linkNames();
                 $newUser->password = hash('sha512', $param['new_password']);
                 $newUser->update($param);
-                
+
                 $deleted[]= $deletedUser;
                 $created[] = $newUser;
             }
             \DB::commit();
-            
+
             $response = [
                 'created'   =>  $created,
                 'deleted'   =>  $deleted
             ];
-            
+
             return self::responseJson($response);
-            
+
         } catch (Exception $ex) {
             \DB::rollback();
             return self::responseJson($ex->getMessage(), 'error');
         }
     }
-    
+
     public function deleteUser(Request $request) {
-        
-        try {    
+
+        try {
 
             $parameters = $request->all();
 
@@ -493,7 +488,7 @@ class UsersController extends Controller
             if ($validator->fails()) {
                 return self::responseJson($validator->errors()->all(), 'error');
             }
-            
+
             $deleted = [];
             \DB::beginTransaction();
             foreach($parameters['delete'] as $index => $param) {
@@ -502,7 +497,7 @@ class UsersController extends Controller
 //                    self::responseJson($index.' element is incorrect..', 'error');
 //                }
                 $deleted[] = $user;
-                $user->delete();  
+                $user->delete();
             }
             \DB::commit();
 
@@ -510,19 +505,19 @@ class UsersController extends Controller
                 'created'   =>  [],
                 'deleted'   =>  $deleted
             ];
-            
+
             return self::responseJson($response);
-            
+
         } catch (Exception $ex) {
             \DB::rollback();
             return self::responseJson($ex->getMessage(), 'error');
         }
     }
-    
+
     public function setLocale(Request $request) {
           try {
             $parameters = $request->all();
-            
+
             $validator = Validator::make($request->all(), [
                 'locale'                =>    'required|in:en,de'
             ]);
@@ -530,11 +525,11 @@ class UsersController extends Controller
             if ($validator->fails()) {
                 return self::responseJson($validator->errors()->all(), 'error');
             }
-            
+
             Session::put('locale', $parameters['locale']);
             //Session::put('locale', 'en');
             app()->setLocale(Session::get('locale'));
-            
+
             $response = [
                 'locale' => Session::get('locale')
             ];
@@ -558,7 +553,7 @@ class UsersController extends Controller
             }
 
             if(isset($parameters['object_id']) && ($parameters['object_id'])) {
-                $user = User::where('object_id', '=', $parameters['object_id']) 
+                $user = User::where('object_id', '=', $parameters['object_id'])
 //                        ->with('userGroup')
                         ->get();
             }

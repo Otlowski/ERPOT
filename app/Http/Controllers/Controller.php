@@ -12,19 +12,19 @@ use Session;
 class Controller extends BaseController
 {
     use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
-    
-    public function __construct () {
+
+    public function __construct (){
         $lang = Session::get('locale');
         if ($lang != null) \App::setLocale($lang);
     }
-    
+
     public static function responseJson($message = '', $status = 'success', $error = null) {
         return response()
-                ->json(['message' => $message, 
+                ->json(['message' => $message,
                         'status' => $status,
                         'error' => $error
                         ]);
     }
-    
-    
+
+
 }

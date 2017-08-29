@@ -21,7 +21,7 @@ use App\Http\Controllers\ApiClient\ApiClientController;
 //Route::get('/', function() {
 //    return view('welcome');
 //});
-Route::get('/',                                    ['uses' => 'UsersViewsController@indexDashboard']);
+// Route::get('/', ['uses' => 'UsersViewsController@indexDashboard', 'middleware'=>'auth']);
 
 /* App :: API Test enviroment (Test client) */
 Route::group([ 'prefix' => 'developers', 'middlewareGroups' => ['web']], function() {
@@ -31,27 +31,33 @@ Route::group([ 'prefix' => 'developers', 'middlewareGroups' => ['web']], functio
 });
 
 /* [GET] Webpages */
-Route::group(['middleware' => 'web'], function() {
-    
-    Route::get('/login',                                        ['uses' => 'UsersViewsController@indexLogin']);
-    Route::get('/register',                                     ['uses' => 'UsersViewsController@indexRegister']);
-    Route::get('/dashboard',                                    ['uses' => 'UsersViewsController@indexDashboard']);
+// Route::auth();
+
+Route::get('/login',                                        ['uses' => 'UsersViewsController@indexLogin']);
+Route::get('/register',                                     ['uses' => 'UsersViewsController@indexRegister']);
+
+Route::group(
+             ['middleware' => 'web',
+              'middleware' => 'auth'], function() {
+
+    Route::get('/',                                             ['uses' => 'UsersViewsController@indexDashboard']);
+    Route::get('/dashboard',                                    ['uses' => 'UsersViewsController@indexDashboard'])->name('dashboard');
     Route::get('/users',                                        ['uses' => 'UsersViewsController@indexUsers']);
     Route::get('/courses',                                      ['uses' => 'UsersViewsController@indexCourses']);
     Route::get('/calendar',                                     ['uses' => 'UsersViewsController@indexCalendar']);
-    
-    
+
+
     Route::get('/chat',                                         ['uses' => 'Chat\ChatController@showChat']);
-    
+
     Route::get('/verify/{hash}',                                ['uses' => 'Users\UsersController@verifyRegisterLink']);
-    
+
     Route::get('/rooms',                                        ['uses' => 'Rooms\RoomsController@showRoomsIndex']);
-    
+
     Route::get('/trainings',                                    ['uses' => 'Trainings\TrainingsEventsController@showTrainingsIndex']);
-    
+
     Route::get('/trainings/calendar',                           ['uses' => 'Trainings\TrainingsEventsController@showTrainingsCalendar']);
 
-    
+
     Route::group(['prefix' => 'reports' ,'namespace' => 'Reports'], function() {
         Route::get('/trainings',                                ['uses' => 'ReportsController@showTrainingsIndex']);
         Route::get('/questionnaires',                           ['uses' => 'ReportsController@showQuestionnairesIndex']);
@@ -76,58 +82,58 @@ Route::group(['prefix' => 'trainings', 'middlewareGroups' => ['web']], function(
     Route::post('detailsTrainingEvent',                               ['uses' => 'Trainings\TrainingsEventsController@detailsTrainingEvent']);
 
      /*  TrainingGroup  */
-    
+
     Route::post('listTrainingsGroups',                  ['uses' => 'Trainings\TrainingsGroupsController@listTrainingsGroups']);
     Route::post('addTrainingsGroups',                   ['uses' => 'Trainings\TrainingsGroupsController@addTrainingsGroups']);
     Route::post('updateTrainingsGroups',                ['uses' => 'Trainings\TrainingsGroupsController@updateTrainingsGroups']);
     Route::post('deleteTrainingsGroups',                ['uses' => 'Trainings\TrainingsGroupsController@deleteTrainingsGroups']);
     Route::post('detailsTrainingsGroups',               ['uses' => 'Trainings\TrainingsGroupsController@detailsTrainingsGroups']);
-    
+
     /*  TrainingContent  */
     Route::post('listTrainingsContents',                         ['uses' => 'Trainings\TrainingsContentsController@listTrainingsContents']);
     Route::post('addTrainingContent',                            ['uses' => 'Trainings\TrainingsContentsController@addTrainingContent']);
     Route::post('updateTrainingContent',                         ['uses' => 'Trainings\TrainingsContentsController@updateTrainingContent']);
     Route::post('deleteTrainingContent',                         ['uses' => 'Trainings\TrainingsContentsController@deleteTrainingContent']);
     Route::post('detailsTrainingContent',                        ['uses' => 'Trainings\TrainingsContentsController@detailsTrainingContent']);
-    
+
     /*  TrainingDocument  */
     Route::post('listTrainingsDocuments',                        ['uses' => 'Trainings\TrainingsDocumentsController@listTrainingsDocuments']);
     Route::post('addTrainingDocument',                           ['uses' => 'Trainings\TrainingsDocumentsController@addTrainingDocument']);
     Route::post('updateTrainingDocument',                        ['uses' => 'Trainings\TrainingsDocumentsController@updateTrainingDocument']);
     Route::post('deleteTrainingDocument',                        ['uses' => 'Trainings\TrainingsDocumentsController@deleteTrainingDocument']);
-    
+
     /*  TrainingLeader  */
     Route::post('listTrainingsLeaders',                          ['uses' => 'Trainings\TrainingsLeadersController@listTrainingsLeaders']);
     Route::post('addTrainingLeader',                             ['uses' => 'Trainings\TrainingsLeadersController@addTrainingLeader']);
     Route::post('updateTrainingLeader',                          ['uses' => 'Trainings\TrainingsLeadersController@updateTrainingLeader']);
     Route::post('deleteTrainingLeader',                          ['uses' => 'Trainings\TrainingsLeadersController@deleteTrainingLeader']);
-    
+
     /*  TrainingNote  */
     Route::post('listTrainingsNotes',                            ['uses' => 'Trainings\TrainingsNotesController@listTrainingsNotes']);
     Route::post('addTrainingNote',                               ['uses' => 'Trainings\TrainingsNotesController@addTrainingNote']);
     Route::post('updateTrainingNote',                            ['uses' => 'Trainings\TrainingsNotesController@updateTrainingNote']);
     Route::post('deleteTrainingNote',                            ['uses' => 'Trainings\TrainingsNotesController@deleteTrainingNote']);
-    
+
     /*  TrainingUser  */
     Route::post('listTrainingsUsers',                            ['uses' => 'Trainings\TrainingsUsersController@listTrainingsUsers']);
     Route::post('addTrainingUser',                               ['uses' => 'Trainings\TrainingsUsersController@addTrainingUser']);
     Route::post('updateTrainingUser',                            ['uses' => 'Trainings\TrainingsUsersController@updateTrainingUser']);
     Route::post('deleteTrainingUser',                            ['uses' => 'Trainings\TrainingsUsersController@deleteTrainingUser']);
-    
+
     /*  TrainingChapter  */
     Route::post('listTrainingsChapters',                        ['uses' => 'Trainings\TrainingsChaptersController@listTrainingsChapters']);
     Route::post('addTrainingChapter',                           ['uses' => 'Trainings\TrainingsChaptersController@addTrainingChapter']);
     Route::post('updateTrainingChapter',                        ['uses' => 'Trainings\TrainingsChaptersController@updateTrainingChapter']);
     Route::post('deleteTrainingChapter',                        ['uses' => 'Trainings\TrainingsChaptersController@deleteTrainingChapter']);
-    
-    /* Pivot TrainingEventContent*/  
+
+    /* Pivot TrainingEventContent*/
     Route::post('listTrainingsEventsContents',                  ['uses' => 'Trainings\TrainingEventContentController@listTrainingsEventsContents']);
 //    Route::post('addTrainingEvent',                                   ['uses' => 'Trainings\TrainingsEventsController@addTrainingEvent']);
 //    Route::post('updateTrainingEvent',                                ['uses' => 'Trainings\TrainingsEventsController@updateTrainingEvent']);
 //    Route::post('deleteTrainingEvent',                                ['uses' => 'Trainings\TrainingsEventsController@deleteTrainingEvent']);
-    
-    /* Pivot TrainingEventUser*/  
-    
+
+    /* Pivot TrainingEventUser*/
+
     Route::post('listTrainingsEventsUsers',                    ['uses' => 'Trainings\TrainingsEventsUsersController@listTrainingsEventsUsers']);
 //    Route::post('addTrainingEventUsers',                              ['uses' => 'Trainings\TrainingsEventsUsersController@addTrainingsEventsUsers']);
 //    Route::post('updateTrainingEventUsers',                           ['uses' => 'Trainings\TrainingsEventsUsersController@updateTrainingsEventsUsers']);
@@ -139,7 +145,7 @@ Route::group(['prefix' => 'users', 'middlewareGroups' => ['web']], function() {
 
     /*  User  */
     Route::post('registerUser',                     ['uses' => 'Users\UsersController@registerUser']);
-    Route::post('login',                            ['uses' => 'Users\UsersController@login']);
+    Route::post('login',                            ['uses' => 'Users\UsersController@login'])->name('login');
     Route::post('logout',                           ['uses' => 'Users\UsersController@logout']);
     Route::post('isLogged',                         ['uses' => 'Users\UsersController@risLogged']);
     Route::post('testMailSending',                  ['uses' => 'Users\UsersController@testMailSending']);
@@ -149,25 +155,25 @@ Route::group(['prefix' => 'users', 'middlewareGroups' => ['web']], function() {
     Route::post('deleteUser',                       ['uses' => 'Users\UsersController@deleteUser']);
     Route::post('setLocale',                        ['uses' => 'Users\UsersController@setLocale']);
     Route::post('detailsUser',                      ['uses' => 'Users\UsersController@detailsUser']);
-    
+
     /*  UserMail  */
     Route::post('listUsersMails',                   ['uses' => 'Users\UsersMailsController@listUsersMails']);
     Route::post('addUserMail',                      ['uses' => 'Users\UsersMailsController@addUserMail']);
     Route::post('updateUserMail',                   ['uses' => 'Users\UsersMailsController@updateUserMail']);
     Route::post('deleteUserMail',                   ['uses' => 'Users\UsersMailsController@deleteUserMail']);
-    
+
      /*  UserRegisterHash  */
     Route::post('listUsersRegisterHashes',          ['uses' => 'Users\UsersRegisterHashesController@listUsersRegisterHashes']);
     Route::post('addUserRegisterHash',              ['uses' => 'Users\UsersRegisterHashesController@addUserRegisterHash']);
     Route::post('updateUserRegisterHash',           ['uses' => 'Users\UsersRegisterHashesController@updateUserRegisterHash']);
     Route::post('deleteUserRegisterHash',           ['uses' => 'Users\UsersRegisterHashesController@deleteUserRegisterHash']);
-    
+
      /*  UserSession  */
     Route::post('listUsersSessions',                ['uses' => 'Users\UsersSessionsController@listUsersSessions']);
     Route::post('addUserSession',                   ['uses' => 'Users\UsersSessionsController@addUserSession']);
     Route::post('updateUserSession',                ['uses' => 'Users\UsersSessionsController@updateUserSession']);
     Route::post('deleteUserSession',                ['uses' => 'Users\UsersSessionsController@deleteUserSession']);
-    
+
      /*  UserGroup  */
     Route::post('listUsersGroups',                  ['uses' => 'Users\UsersGroupsController@listUsersGroups']);
     Route::post('addUsersGroups',                   ['uses' => 'Users\UsersGroupsController@addUsersGroups']);
@@ -185,19 +191,19 @@ Route::group(['prefix' => 'rooms', 'middlewareGroups' => ['web']], function() {
     Route::post('updateRoom',          ['uses' => 'Rooms\RoomsController@updateRoom']);
     Route::post('deleteRoom',          ['uses' => 'Rooms\RoomsController@deleteRoom']);
     Route::post('detailsRoom',         ['uses' => 'Rooms\RoomsController@detailsRoom']);
-    
+
     /*  Rooms Groups */
     Route::post('listRoomsGroups',            ['uses' => 'Rooms\RoomsGroupsController@listRoomsGroups']);
     Route::post('addRoomsGroups',             ['uses' => 'Rooms\RoomsGroupsController@addRoomsGroups']);
     Route::post('updateRoomsGroups',          ['uses' => 'Rooms\RoomsGroupsController@updateRoomsGroups']);
     Route::post('deleteRoomsGroups',          ['uses' => 'Rooms\RoomsGroupsController@deleteRoomsGroups']);
     Route::post('detailsRoomsGroups',         ['uses' => 'Rooms\RoomsGroupsController@detailsRoomsGroups']);
-    
+
 });
 
 /* [POST] Questionnaires */
 Route::group(['prefix' => 'questionnaires', 'middlewareGroups' => ['web']], function() {
-   
+
     /*  Questionnaire  */
     Route::post('listQuestionnaires',                                 ['uses' => 'Questionnaires\QuestionnairesController@listQuestionnaires']);
     Route::post('addQuestionnaire',                                   ['uses' => 'Questionnaires\QuestionnairesController@addQuestionnaire']);
@@ -209,13 +215,13 @@ Route::group(['prefix' => 'questionnaires', 'middlewareGroups' => ['web']], func
     Route::post('addQuestionnaireFeedback',                           ['uses' => 'Questionnaires\QuestionnairesFeedbacksController@addQuestionnaireFeedback']);
     Route::post('updateQuestionnaireFeedback',                        ['uses' => 'Questionnaires\QuestionnairesFeedbacksController@updateQuestionnaireFeedback']);
     Route::post('deleteQuestionnaireFeedback',                        ['uses' => 'Questionnaires\QuestionnairesFeedbacksController@deleteQuestionnaireFeedback']);
-    
+
     /*  QuestionnaireItem  */
     Route::post('listQuestionnairesItems',                            ['uses' => 'Questionnaires\QuestionnairesItemsController@listQuestionnairesItems']);
     Route::post('addQuestionnaireItem',                               ['uses' => 'Questionnaires\QuestionnairesItemsController@addQuestionnaireItem']);
     Route::post('updateQuestionnaireItem',                            ['uses' => 'Questionnaires\QuestionnairesItemsController@updateQuestionnaireItem']);
     Route::post('deleteQuestionnaireItem',                            ['uses' => 'Questionnaires\QuestionnairesItemsController@deleteQuestionnaireItem']);
-    
+
     /*  QuestionnaireUser  */
     Route::post('listQuestionnairesUsers',                            ['uses' => 'Questionnaires\QuestionnairesUsersController@listQuestionnairesUsers']);
     Route::post('addQuestionnaireUser',                               ['uses' => 'Questionnaires\QuestionnairesUsersController@addQuestionnaireUser']);
@@ -225,16 +231,16 @@ Route::group(['prefix' => 'questionnaires', 'middlewareGroups' => ['web']], func
 
 /* [POST] Reports */
 Route::group(['prefix' => 'reports', 'middlewareGroups' => ['web']], function() {
-   
+
     /*  Trainings  */
     Route::post('showTrainingsStats',                                 ['uses' => 'Reports\TrainingsController@showTrainingsStats']);
-    
+
     /*  Questionnaires  */
     Route::post('showQuestionnairesStats',                            ['uses' => 'Reports\QuestionnairesController@showQuestionnairesStats']);
 });
 
 /* [POST] Reports */
 Route::group(['middlewareGroups' => ['web']], function() {
-   
+
     Route::post('chat',                                               ['uses' => 'Chat\ChatController@showChat']);
 });
