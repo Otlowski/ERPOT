@@ -37,11 +37,10 @@ Route::get('/login',                                        ['uses' => 'UsersVie
 Route::get('/register',                                     ['uses' => 'UsersViewsController@indexRegister']);
 
 Route::group(
-             ['middleware' => 'web',
-              'middleware' => 'auth'], function() {
+             ['middleware' => 'web'], function() {
 
     Route::get('/',                                             ['uses' => 'UsersViewsController@indexDashboard']);
-    Route::get('/dashboard',                                    ['uses' => 'UsersViewsController@indexDashboard'])->name('dashboard');
+    Route::get('/dashboard',                                    ['uses' => 'UsersViewsController@indexDashboard']);
     Route::get('/users',                                        ['uses' => 'UsersViewsController@indexUsers']);
     Route::get('/courses',                                      ['uses' => 'UsersViewsController@indexCourses']);
     Route::get('/calendar',                                     ['uses' => 'UsersViewsController@indexCalendar']);
@@ -128,16 +127,16 @@ Route::group(['prefix' => 'trainings', 'middlewareGroups' => ['web']], function(
 
     /* Pivot TrainingEventContent*/
     Route::post('listTrainingsEventsContents',                  ['uses' => 'Trainings\TrainingEventContentController@listTrainingsEventsContents']);
-//    Route::post('addTrainingEvent',                                   ['uses' => 'Trainings\TrainingsEventsController@addTrainingEvent']);
-//    Route::post('updateTrainingEvent',                                ['uses' => 'Trainings\TrainingsEventsController@updateTrainingEvent']);
-//    Route::post('deleteTrainingEvent',                                ['uses' => 'Trainings\TrainingsEventsController@deleteTrainingEvent']);
+   Route::post('addTrainingEvent',                                   ['uses' => 'Trainings\TrainingsEventsController@addTrainingEvent']);
+   Route::post('updateTrainingEvent',                                ['uses' => 'Trainings\TrainingsEventsController@updateTrainingEvent']);
+   Route::post('deleteTrainingEvent',                                ['uses' => 'Trainings\TrainingsEventsController@deleteTrainingEvent']);
 
     /* Pivot TrainingEventUser*/
 
-    Route::post('listTrainingsEventsUsers',                    ['uses' => 'Trainings\TrainingsEventsUsersController@listTrainingsEventsUsers']);
-//    Route::post('addTrainingEventUsers',                              ['uses' => 'Trainings\TrainingsEventsUsersController@addTrainingsEventsUsers']);
-//    Route::post('updateTrainingEventUsers',                           ['uses' => 'Trainings\TrainingsEventsUsersController@updateTrainingsEventsUsers']);
-//    Route::post('deleteTrainingEventUsers',                           ['uses' => 'Trainings\TrainingsEventsUsersController@deleteTrainingsEventsUsers']);
+  Route::post('listTrainingsEventsUsers',                    ['uses' => 'Trainings\TrainingsEventsUsersController@listTrainingsEventsUsers']);
+   Route::post('addTrainingEventUsers',                              ['uses' => 'Trainings\TrainingsEventsUsersController@addTrainingsEventsUsers']);
+   Route::post('updateTrainingEventUsers',                           ['uses' => 'Trainings\TrainingsEventsUsersController@updateTrainingsEventsUsers']);
+   Route::post('deleteTrainingEventUsers',                           ['uses' => 'Trainings\TrainingsEventsUsersController@deleteTrainingsEventsUsers']);
 });
 
 /* [POST] Users */
@@ -145,7 +144,7 @@ Route::group(['prefix' => 'users', 'middlewareGroups' => ['web']], function() {
 
     /*  User  */
     Route::post('registerUser',                     ['uses' => 'Users\UsersController@registerUser']);
-    Route::post('login',                            ['uses' => 'Users\UsersController@login'])->name('login');
+    Route::post('login',                            ['uses' => 'Users\UsersController@login']);
     Route::post('logout',                           ['uses' => 'Users\UsersController@logout']);
     Route::post('isLogged',                         ['uses' => 'Users\UsersController@risLogged']);
     Route::post('testMailSending',                  ['uses' => 'Users\UsersController@testMailSending']);
@@ -244,3 +243,7 @@ Route::group(['middlewareGroups' => ['web']], function() {
 
     Route::post('chat',                                               ['uses' => 'Chat\ChatController@showChat']);
 });
+
+Route::auth();
+
+Route::get('/home', 'HomeController@index');

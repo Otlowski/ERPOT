@@ -61,7 +61,7 @@
     left: 0px;
     right: 0px;
     bottom: 0px;
-    
+
     margin: 45px 0 0 0;
     min-width: 960px;
     min-height: 600px;
@@ -157,7 +157,7 @@
     display: inline-block;
     overflow: hidden;
     overflow-y: scroll;
-    float: left;    
+    float: left;
     top: 0px;
     bottom: 0px;
     left: 200px;
@@ -170,7 +170,7 @@
     position: absolute;
     display: inline-block;
     overflow: hidden;
-    float: left;    
+    float: left;
     top: 0px;
     left: 500px;
     right: 0px;
@@ -238,7 +238,7 @@
     left: 16px;
     right: 0px;
     background-color: #f1f1f1;
-    
+
 }
 .groups-list__item-label {
     display: inline-block;
@@ -257,18 +257,18 @@
 
 
 .items-list {
-    
+
 }
 .items-list__header {
-    
+
 }
 
 .items-list__content {
-    
+
 }
 
 .items-list__footer {
-    
+
 }
 
 
@@ -283,12 +283,12 @@
     height: 1px;
 }
 .dragging-handler__icon {
-    position:absolute; 
-    top: -16px; 
-    left: -16px; 
+    position:absolute;
+    top: -16px;
+    left: -16px;
     display:block;
-    width: 32px;; 
-    height: 32px; 
+    width: 32px;;
+    height: 32px;
     opacity: 0.5;
     background: url("/assets/img/icon-documents-36x36.png") center center no-repeat;
     background-size: 32px 32px;
@@ -297,7 +297,7 @@
 /*
  * Component :: Search bar
  */
-.search-bar { 
+.search-bar {
     position: relative;
     display: block;
     height: 44px;
@@ -322,14 +322,7 @@
     width: 200px;
     border: none;
     font-size: 13px;
-    /*padding: 2px 3px;*/
-    margin: 1px
 }
-
-
-
-
-
 
 .header-module {
     position: absolute;
@@ -566,7 +559,7 @@
     height: 100%;
     border-right: 1px solid #e5e5e5;
 }
-.col-items > div div.search-bar { 
+.col-items > div div.search-bar {
     background: #f7f7f7;
     height: 44px;
     width: 100%;
@@ -627,7 +620,7 @@
 }
 
 .col-items .section-header .tablecell > div {
-    display: table-row;    
+    display: table-row;
 }
 
 
@@ -667,12 +660,12 @@
     display:table-cell;
     text-align: left;
     width: 20%;
-    margin: 0;  
+    margin: 0;
 }
 .header-download {
     display:table-cell;
     text-align: left;
-    width: 20%; 
+    width: 20%;
     margin: 0;
 }
 
@@ -722,7 +715,7 @@
     display: inline-block;
     width: 25%;
     font-weight: bold;
-    font-size: 17px;    
+    font-size: 17px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -759,7 +752,7 @@
 
 .col-items .section-content .tablecell .modyfied {
     display: inline-block;
-    width: 15%;  
+    width: 15%;
     text-align: right;
     font-weight: normal;
     color: #51a0e5;
@@ -775,7 +768,7 @@
 
 .col-items .section-content .tablecell .download {
     display: inline-block;
-    width: 15%;  
+    width: 15%;
     text-align: center;
     cursor: pointer;
 }
@@ -847,7 +840,7 @@
     overflow: hidden;
 }
 .row-form .col-preview {
-    display: inline-block;    
+    display: inline-block;
 }
 
 .row-form .col-preview .preview {
@@ -923,12 +916,12 @@
     height: 1px;
 }
 .dragging-handler .drag-icon {
-    position:absolute; 
-    top: -16px; 
-    left: -16px; 
+    position:absolute;
+    top: -16px;
+    left: -16px;
     display:block;
-    width: 32px;; 
-    height: 32px; 
+    width: 32px;;
+    height: 32px;
     opacity: 0.5;
     background: url("../../img/icon-documents-36x36.png") center center no-repeat;
     background-size: 32px 32px;
@@ -1015,7 +1008,7 @@
     border-bottom: 1px solid #eee;
 }
 .employees-group {
-    
+
 }
 .training_content-item {
     padding: 3px 0 3px 0;
@@ -1028,7 +1021,7 @@
     position: relative;
     display:block;
     float:left;
-    width: 100%; 
+    width: 100%;
     max-width: 200px;
     min-height:19px;
     background-color: transparent;
@@ -1077,7 +1070,7 @@
     padding: 0;
     margin: 0;
     font-weight: normal;
-    
+
 }
 .training_content-item__department-label {
     position: absolute;
@@ -1103,7 +1096,7 @@
 
 
 .training_content__col-name
-{ 
+{
     max-width: 300px;
     padding-left: 10px;
     color: #000;
@@ -1119,7 +1112,7 @@
     font-weight: bold;
 }
 .training_content-item__col-name--chapters{
-    
+
 }
 .training_content-item__col-position
 {
@@ -1132,6 +1125,16 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     float: left;
+}
+.training_content__footer{
+  font-size: 13px;
+  padding: 3px 0 3px 0;
+  cursor: pointer;
+  height: 45px;
+  max-height: 45px;
+  line-height: 41px;
+  /*background-color: rgba(22,126,251,0.7);*/
+  color: #465D6E;
 }
 .training_content-item__col-count {
     font-size: 13px;
@@ -1170,7 +1173,7 @@
 }
 .col__contractor
 {
-    font-size:12px; 
+    font-size:12px;
     font-weight: bold;
     text-align: left;
     min-height:25px;
@@ -1182,29 +1185,29 @@
     text-align: left;
 }
 .col__send-date {
-    font-size: 11px; 
+    font-size: 11px;
     text-align: left;
 }
 .col__valid-date
 {
     min-height:20px;
-    font-size:13px; 
+    font-size:13px;
     text-align: left;
 }
 .col__approve-date
 {
     min-height:25px;
-    font-size:11px; 
+    font-size:11px;
     text-align: left;
 }
 .col__invoice-number{
-    font-size:13px; 
+    font-size:13px;
     min-height:20px;
     text-align: left;
 }
-.col__invoice-date 
+.col__invoice-date
 {
-    font-size:11px; 
+    font-size:11px;
     text-align: left;
 }
 .col__contract-value
@@ -1218,7 +1221,7 @@
 .col__contract-value .currency {
     font-size: 13px;
     margin-left: 5px;
-    
+
 }
 .col__cost-currency
 {
@@ -1308,14 +1311,21 @@
 .trainings-details .margin-row {
     margin-top: 17px;
 }
-.trainings-details .margin-light { 
+.trainings-details .margin-light {
     margin-top: 10px;
 }
 
 .trainings-details .details-row {
-    display: table-row; 
+    display: table-row;
     width:100%;
     min-height: 30px;
+    float: left;
+}
+.trainings-details .details-row.tabs {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid #ededed;
+    border-bottom: 1px solid #ededed;
 }
 .trainings-details .details-row .col-line {
     display: table-cell;
@@ -1325,7 +1335,7 @@
 .trainings-details .details-row .col-line .line {
         margin-left: 200px;
         margin-top: 20px;
-        border-top: 1px solid #ededed;   
+        border-top: 1px solid #ededed;
 }
 
 .trainings-details .details-row .col-remove {
@@ -1343,8 +1353,8 @@
     cursor: pointer;
 }
 .trainings-details .details-row .col-label {
-    display: table-cell; 
-    float:left; 
+    display: table-cell;
+    float:left;
     width: 150px;
     margin-left: 50px;
     text-align: right;
@@ -1367,7 +1377,7 @@
     width: 100%;
     height: 96px;
     background: url('../../img/icon-male.png') right center no-repeat;
-    background-size: 96px 96px;  
+    background-size: 96px 96px;
 }
 .trainings-details .details-row .col-label .label-text {
     white-space: nowrap;
@@ -1379,9 +1389,9 @@
 }
 
 .trainings-details .details-row .col-data {
-    display: table-cell; 
-    float:left; 
-    width: calc(100% - 200px); 
+    display: table-cell;
+    float:left;
+    width: calc(100% - 200px);
     min-height: 30px;
     padding-top: 3px;
     padding-right: 100px;
@@ -1392,7 +1402,7 @@
     font-size: 17px;
     line-height: 27px;
     /* white-space: nowrap; */
-    overflow: hidden; 
+    overflow: hidden;
 }
 .trainings-details .details-row .col-data .name {
     display: block;
@@ -1455,7 +1465,7 @@
     width: 137px; margin-right: 11px;float: left;
 }
 .trainings-details .details-row .col-data .data-input input.city {
-    width: 137px; 
+    width: 137px;
     float: left;
 }
 .trainings-details .details-row .col-data .data-input textarea {
@@ -1467,7 +1477,7 @@
     border-style: solid;
     border-color: #d9d9d9;
     border-width: 1px;
-    border-radius: 2px; 
+    border-radius: 2px;
     -webkit-box-shadow: inset 0px 1px 0px 0px #fafafa;
     color: #1a1a1a;
     outline: none;
@@ -1504,10 +1514,10 @@
     background: url('../../img/ajax-loader.gif') center bottom no-repeat;
 }
 .data-input .status.file-uploaded {
-    
+
 }
 .data-input .status.file-uploaderror {
-    
+
 }
 
 /* Employee details - Image thumb */
@@ -1520,8 +1530,8 @@
     text-align: center;
 }
 .employee-image .image-thumb {
-    width: 102px; 
-    height: 102px; 
+    width: 102px;
+    height: 102px;
     border-radius: 50%;
     border: 1px solid #ccc;
     text-align: center;
@@ -1532,7 +1542,7 @@
 }
 
 .employee-image img{
-    width: 100px; 
+    width: 100px;
     height: 100px;
     border: none;
     outline: none;
@@ -1540,9 +1550,9 @@
 }
 
 .btn-add {
-    
+
 }
-    
+
 .btn-add a.add,
 .btn-add a.add:hover {
     position: absolute;
@@ -1589,14 +1599,14 @@
 
 .employee-history-list .list-item .col-type-label {
     display:inline-block;
-    float:left; 
+    float:left;
     width: 35px;
     height: 35px;
 }
 
 .employee-history-list .list-item .col-history-details {
     display:inline-block;
-    float:left; 
+    float:left;
     width: 210px;
     height: auto;
 }
@@ -1615,22 +1625,25 @@
     margin-bottom: 0px;
 }
 
-.line-max 
+.line-max
 {
     width: 100%;
     margin-top: 20px;
-    border-top: 1px solid #ededed;   
+    border-top: 1px solid #ededed;
 }
 
 .chapter-item
 {
-    display: table-row; 
+    display: table-row;
     width:100%;
-    min-height: 30px;
+    min-height: 100px;
+    float: left;
+    border-bottom: 1px solid #ededed;
+    padding: 10px;
 }
 .chapter-item__content
 {
-    
+
 }
 .chapter-item__number
 {
@@ -1662,7 +1675,7 @@
     width: 100%;
     height: 100%;
     font-size: 25px;
-    padding-top: 5px;
+    line-height: 50px;
     color:#999;
 }
 .chapter-item__name
@@ -1676,7 +1689,7 @@
     font-size: 18px;
     min-height: 55px;
     color: #999;
-    overflow: hidden;   
+    overflow: hidden;
     /*background:red;*/
 }
 .chapter-item__text
@@ -1691,7 +1704,7 @@
     padding-top: 3px;
     padding-right: 27px;
     min-height: 30px;
-    overflow: hidden;   
+    overflow: hidden;
 }
 .chapter-item__download
 {
@@ -1702,17 +1715,30 @@
     height: 36px;
     margin: 0 auto;
     background: url("../../../static/img/Trainings/icon-cloud-36x36.png") 0px 0px no-repeat;
- 
-}
 
+}
+.chapter-item__play
+{
+    display: table-cell;
+    float: left;
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    margin: 0 auto;
+    margin-left: 10px;
+    cursor:pointer;
+}
+.chapter-item__viedeo-content{
+  margin-top: 20px;
+  width: 100%;
+  float: left;
+}
 .chapter-item .col-line
 {
     display: table-cell;
     width: 100%;
-    height: 40px;
 }
 .chapter-item .col-line .line
 {
-    margin-top: 20px;
-    border-top: 1px solid #ededed; 
+    border-top: 1px solid #ededed;
 }

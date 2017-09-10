@@ -89,7 +89,7 @@ trainingsListVC.getTrainingsList = function (dataParams) {
                         .find('.training_content-item')
                         .unbind("click")
                         .click(trainingsListVC.onTrainingClick);
-        
+
     });
 };
 
@@ -124,7 +124,7 @@ trainingsListVC.onTrainingClick = function(e) {
             trainingsPreviewVC.showTrainingsDetails (trainingData);
 //            console.log("[INFO] Make preview");
         });
-        
+
     };
 trainingsListVC.setFooter = function () {
 

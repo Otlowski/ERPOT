@@ -16,15 +16,13 @@ class TrainingsGroupsTableSeeder extends Seeder {
         $faker = \Faker\Factory::create();
 
         $groupsNames = [
-            'Siemens TC',
-            'AutoCad',
-            'Sap Business One',
-            'Sap Pronovia',
-            'MSH Processes',
-            'MSH HQM',
-            'MSH Materials'
+            'Web Development',
+            'Software Development',
+            'Design',
+            'Photography',
+            'Management '
         ];
-        
+
         foreach ($groupsNames as $groupName) {
 
             $name = $groupName;

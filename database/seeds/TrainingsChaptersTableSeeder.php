@@ -16,10 +16,6 @@ class TrainingsChaptersTableSeeder extends Seeder {
 
         $faker = \Faker\Factory::create();
 
-        
-
-
-        
         $randomName = [
             '0' => 'Getting Started',
             '1' => 'Types and expressions',
@@ -28,19 +24,19 @@ class TrainingsChaptersTableSeeder extends Seeder {
             '4' => 'Structs',
             '5' => 'Functions',
         ];
+
         $mask = '000';
         $actualChapter = 1;
-        
 
-//        foreach ($trainingsContents as $content) {
+
             $trainingsContents = TrainingContent::all()->toArray();
             $limit = rand(0, 6);
             $trainingContentIndex = array_rand($trainingsContents);
             $slicedArray = array_slice($randomName, 0, $limit);
             foreach ($slicedArray as $name) {
-                
+
                 $content = $trainingsContents[$trainingContentIndex]['id'];
-                
+
                 $value  = $mask.$actualChapter;
                 $shortValue = substr($value, -2);
                 $parameters = [
@@ -53,7 +49,6 @@ class TrainingsChaptersTableSeeder extends Seeder {
 
                 $trainingChapter = new TrainingChapter($parameters);
                 $trainingChapter->save();
-//            }
         }
     }
 

@@ -1,12 +1,12 @@
 <div class="content preview trainings-details__content "  data-function="preview-form">
     <input type="hidden" id="data-employee-id" value="" />
     <div class="details-row" style="height:20px;"></div>
-    <div class="details-row">
+    <div class="details-row" style="line-height: 106px; text-align: left;margin-bottom:30px;">
         <div class="col-label">
 
             <div class="image-malee employee-image">
 
-                <div class="image-thumb" data-function="image-thumb"> 
+                <div class="image-thumb" data-function="image-thumb">
                 </div>
             </div>
 
@@ -24,15 +24,8 @@
 
         </div>
     </div>
-    <div class="details-row" style="height:20px;"></div>
-
-    <div class="details-row">
-        <div class="col-line"><div class="line-max"></div></div>
-    </div>
-
-    <div class="details-row">
+    <div class="details-row tabs">
         <div class="col-label">
-
         </div>
         <div class="col-data">
             <div class="col-buttons">
@@ -53,7 +46,7 @@
                     01
                 </div>
             </div>
-            <div class="chapter-item__name"> 
+            <div class="chapter-item__name">
                 Introduction
             </div>
             <div class="chapter-item__text">
@@ -74,4 +67,4 @@
         </div>
     </div>
 
-</div>  
+</div>
