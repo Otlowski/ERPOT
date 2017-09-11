@@ -30,6 +30,7 @@
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js?rev={{ \Config::get('revision.rev') }}"></script>
 
     <script src="/js/AppBase/Extensions/Bootstrap/bootstrap.min.js?rev={{ \Config::get('revision.rev') }}"></script>
+    <script src="/js/AppBase/jQueryEditable/jquery.editable.js?rev={{ \Config::get('revision.rev') }}"></script>
     <!-- JavaScripts :: AppCore -->
     <script src="/js/AppCore/Libraries/apiClient.js?rev={{ \Config::get('revision.rev') }}"></script>
     <script src="/js/AppCore/Libraries/tabView.js?rev={{ \Config::get('revision.rev') }}"></script>

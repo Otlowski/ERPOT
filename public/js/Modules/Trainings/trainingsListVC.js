@@ -35,6 +35,21 @@ trainingsListVC.getGroups = function () {
             trainingsListVC.$tableContent.append($groupTpl);
 
             $groupTpl.click(trainingsListVC.onTrainingGroupClick);
+            $groupTpl.find('.groups-list__item-text').editable('dblclick',function(e){
+
+              var trainingGroupId = e.target.prevObject[0].id;
+              var newGroupName    = e.value;
+
+
+              var create = {
+                'id'   : trainingGroupId,
+                'name' : newGroupName
+              };
+              var dataParams = { create : [create] };
+              console.log(dataParams);
+              trainingsListVC.updateTrainingGroupName(dataParams);
+
+            });
 
         });
 
@@ -104,6 +119,17 @@ trainingsListVC.createTrainingItem = function (trainingContent) {
 
     return $trainingsTpl;
 
+};
+
+trainingsListVC.updateTrainingGroupName = function(dataParams){
+
+  apiClient.post('/trainings/updateTrainingsGroups', dataParams, function (response) {
+      if ("success" !== response.status) {
+          showModal(response);
+          return;
+      }
+      var editedTrainingGroup = response.message;
+  });
 };
 /*ON TRAINING CLICK*/
 trainingsListVC.onTrainingClick = function(e) {
