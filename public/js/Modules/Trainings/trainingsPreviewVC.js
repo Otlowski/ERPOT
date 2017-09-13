@@ -16,12 +16,11 @@ var trainingsPreviewVC = {};
 
         var previewForm = trainingsPreviewVC.$previewForm;
             previewForm.show();
-            console.log(trainingData);
             $("#data-name").text(trainingData.name);
 
             //Contents Chapters,Documents,Notes
         var trainingContentsId = trainingData.id;
-            console.log(trainingContentsId);
+  
         var dataParam ={
             trainings_contents__id : trainingContentsId
             };
@@ -123,8 +122,8 @@ var trainingsPreviewVC = {};
         '   <div class="chapter-item__text">',
         '   </div>',
         '   <div class="chapter-item__media-box">',
-        '     <div class="chapter-item__download">',
-        '     </div>',
+        // '     <div class="chapter-item__download">',
+        // '     </div>',
         '     <img class="chapter-item__play" src="../../../static/img/Trainings/play_chapter.png" alt="">',
         '     <div class="chapter-item__viedeo-content collapse">',
         '       <video width="600" style="display:block; margin:0 auto;" poster="../../../static/img/App/erpot-logo.png" controls>',

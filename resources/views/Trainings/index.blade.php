@@ -9,6 +9,8 @@
 
 @section('content')
 @include('Trainings.modals.trainingAdd')
+@include('Trainings.modals.trainingGroupDelete')
+
 <div id="employees" class="main-module comployees noselect">
     <div class="main-header">
         <div class="row">
@@ -63,7 +65,7 @@
                         <div class="groups-list__item">
                             <div class="groups-list__item-content">
                                 <div class="groups-list__item-label">
-                                    <i class="glyphicon glyphicon-folder-open"></i> 
+                                    <i class="glyphicon glyphicon-folder-open"></i>
                                 </div>
                                 <div class="groups-list__item-text">Siemens NX</div>
                             </div>
@@ -71,7 +73,7 @@
                         <div class="groups-list__item">
                             <div class="groups-list__item-content">
                                 <div class="groups-list__item-label">
-                                    <i class="glyphicon glyphicon-folder-open"></i> 
+                                    <i class="glyphicon glyphicon-folder-open"></i>
                                 </div>
                                 <div class="groups-list__item-text">Siemens TC</div>
                             </div>
@@ -79,7 +81,7 @@
                         <div class="groups-list__item">
                             <div class="groups-list__item-content">
                                 <div class="groups-list__item-label">
-                                    <i class="glyphicon glyphicon-folder-open"></i> 
+                                    <i class="glyphicon glyphicon-folder-open"></i>
                                 </div>
                                 <div class="groups-list__item-text">AutoCAD</div>
                             </div>
@@ -87,7 +89,7 @@
                         <div class="groups-list__item">
                             <div class="groups-list__item-content">
                                 <div class="groups-list__item-label">
-                                    <i class="glyphicon glyphicon-folder-open"></i> 
+                                    <i class="glyphicon glyphicon-folder-open"></i>
                                 </div>
                                 <div class="groups-list__item-text">SAP Business One</div>
                             </div>
@@ -95,7 +97,7 @@
                         <div class="groups-list__item">
                             <div class="groups-list__item-content">
                                 <div class="groups-list__item-label">
-                                    <i class="glyphicon glyphicon-folder-open"></i> 
+                                    <i class="glyphicon glyphicon-folder-open"></i>
                                 </div>
                                 <div class="groups-list__item-text">SAP Pronovia</div>
                             </div>
@@ -103,7 +105,7 @@
                         <div class="groups-list__item">
                             <div class="groups-list__item-content">
                                 <div class="groups-list__item-label">
-                                    <i class="glyphicon glyphicon-folder-open"></i> 
+                                    <i class="glyphicon glyphicon-folder-open"></i>
                                 </div>
                                 <div class="groups-list__item-text">MSH Processes</div>
                             </div>
@@ -111,7 +113,7 @@
                         <div class="groups-list__item">
                             <div class="groups-list__item-content">
                                 <div class="groups-list__item-label">
-                                    <i class="glyphicon glyphicon-folder-open"></i> 
+                                    <i class="glyphicon glyphicon-folder-open"></i>
                                 </div>
                                 <div class="groups-list__item-text">MSH HQM</div>
                             </div>
@@ -119,7 +121,7 @@
                         <div class="groups-list__item">
                             <div class="groups-list__item-content">
                                 <div class="groups-list__item-label">
-                                    <i class="glyphicon glyphicon-folder-open"></i> 
+                                    <i class="glyphicon glyphicon-folder-open"></i>
                                 </div>
                                 <div class="groups-list__item-text">MSH Materials</div>
                             </div>
@@ -127,7 +129,7 @@
                         <div class="groups-list__item">
                             <div class="groups-list__item-content">
                                 <div class="groups-list__item-label">
-                                    <i class="glyphicon glyphicon-folder-open"></i> 
+                                    <i class="glyphicon glyphicon-folder-open"></i>
                                 </div>
                                 <div class="groups-list__item-text">MSE Introduction</div>
                             </div>
@@ -135,24 +137,24 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="main-col__items" data-function="items">
-                    
-                    <div class="training_content-list"> 
+
+                    <div class="training_content-list">
                         <div class="training_content__header">
-                                
+
                         </div>
                         <div class="training_content__content" data-function="trainings-list">
-                            
+
                         </div>
                         <div class="training_content__footer">
                             Items count: 0
                         </div>
                     </div>
-                    
-            </div> 
+
+            </div>
             <div class="main-col__details trainings-details" >
-            
+
                 <div class="trainings-alert__content" data-function="alert-form">
                     <div class="trainings-alert__h3">No training selected</div>
                 </div>

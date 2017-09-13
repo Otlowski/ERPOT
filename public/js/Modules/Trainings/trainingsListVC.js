@@ -10,6 +10,9 @@ trainingsListVC.$tableTrainingsContents = $("[data-function=trainings-list]");
 /* Init view */
 trainingsListVC.init = function () {
     trainingsListVC.getGroups();
+    //events
+    $('[data-function=add-training]').unbind('click')
+                                     .click(trainingsListVC.onTrainingAddClick);
 };
 
 /*Traininngs LIST*/
@@ -35,6 +38,23 @@ trainingsListVC.getGroups = function () {
             trainingsListVC.$tableContent.append($groupTpl);
 
             $groupTpl.click(trainingsListVC.onTrainingGroupClick);
+            // $groupTpl.find('.groups-list__item-label').find('.glyphicon').attr('data-toggle','modal').attr('data-target','#confirm-delete');
+            $groupTpl.find('.groups-list__item-label').hover(
+                function() {
+                  $(this).css({"color": "red", "font-size": "13px"});
+                  $( this ).find('.glyphicon')
+                           .removeClass( "glyphicon-folder-open")
+                           .addClass("glyphicon-trash")
+                          //  .attr('data-toggle','modal')
+                          //  .attr('data-target','#confirm-delete')
+                           .unbind('click')
+                           .click(trainingsListVC.onDeleteTrainingGroup);
+                }, function() {
+                  $(this).css({"color": "#465D6E", "font-size": "11px"});
+                  $( this ).find('.glyphicon')
+                           .removeClass("glyphicon-trash")
+                           .addClass( "glyphicon-folder-open");
+                });
             $groupTpl.find('.groups-list__item-text').editable('dblclick',function(e){
 
               var trainingGroupId = e.target.prevObject[0].id;
@@ -42,11 +62,9 @@ trainingsListVC.getGroups = function () {
 
 
               var create = {
-                'id'   : trainingGroupId,
-                'name' : newGroupName
+                'id'   : trainingGroupI
               };
               var dataParams = { create : [create] };
-              console.log(dataParams);
               trainingsListVC.updateTrainingGroupName(dataParams);
 
             });
@@ -131,9 +149,29 @@ trainingsListVC.updateTrainingGroupName = function(dataParams){
       var editedTrainingGroup = response.message;
   });
 };
+
+trainingsListVC.onDeleteTrainingGroup = function(e){
+
+  e.stopPropagation();
+  var trainingGroupItem = $(this);
+  var groupItemId = trainingGroupItem.parents('.groups-list__item').eq(0).attr('id');
+  var deleted = {
+    'id'   : groupItemId
+  };
+  var dataParams = { delete : [deleted] };
+
+  apiClient.post('/trainings/deleteTrainingsGroups', dataParams, function (response) {
+      if ("success" !== response.status) {
+          showModal(response);
+          return;
+      }
+      var editedTrainingGroup = response.message;
+  });
+
+};
 /*ON TRAINING CLICK*/
 trainingsListVC.onTrainingClick = function(e) {
-    console.log('into training click');
+
         trainingsListVC.$tableTrainingsContents.find('.training_content-item').removeClass("selected");
             var $clickedItem = $(this);
                 $clickedItem.addClass("selected");
@@ -141,17 +179,95 @@ trainingsListVC.onTrainingClick = function(e) {
         var dataParam = {
             id  : trainingId
         };
-        console.log(dataParam);
         apiClient.post("/trainings/detailsTrainingContent",dataParam,function(response){
             // if error
             if("success" != response.status) { showAlert(response); return; }
             // if success
             var trainingData = response.message;
             trainingsPreviewVC.showTrainingsDetails (trainingData);
-//            console.log("[INFO] Make preview");
         });
+};
+/* Methods for creating new Training */
+trainingsListVC.onTrainingAddClick = function(e) {
+  trainingsListVC.createTrainingRow();
+};
+trainingsListVC.createTrainingRow = function(e){
+  var lastTraining = $('.training_content-item').last();
+  var newTrainingTemplate = $(trainingsListVC.newTrainingInput);
+      newTrainingTemplate.addClass('new-training');
+      newTrainingTemplate.find('#name-input').addClass('active-input');
 
-    };
+      if(lastTraining){
+        lastTraining.after(newTrainingTemplate);
+      }else{
+        $('.training_content__content').append(newTrainingTemplate);
+      }
+
+      //focus
+      $('.active-input').focus();
+      $(".active-input").keyup(function(event){
+        var trainingName = $(this).val();
+        if(event.keyCode === 13) trainingsListVC.confirmAddNewTraining(trainingName);
+        if(event.keyCode === 27) trainingsListVC.cancelAddingNewTraining();
+      });
+
+      $('.active-input').on('focusout', function(e){
+        var trainingName = $(this).val();
+
+        if(trainingName){ trainingsListVC.confirmAddNewTraining(trainingName);   }
+        else          { trainingsListVC.cancelAddingNewTraining();           }
+      });
+};
+trainingsListVC.confirmAddNewTraining = function(trainingName){
+
+  var create = {
+    'name'   : trainingName
+  };
+  var dataParams = { create : [create] };
+
+  apiClient.post("/trainings/addTrainingContent", dataParams, function (response) {
+      // if error
+      if ("success" != response.status) {
+          showAlert(response);
+          return;
+      }
+      var responseName = response.message.created[0].name;
+      var responseId   = response.message.created[0].id;
+
+      //show span
+      $('.new-training').find('#name-span')
+                        .text(responseName)
+                        .fadeIn()
+                        .parents('.training_content-item')
+                        .attr('data-training-id', responseId);
+
+      $('.training_content-item')
+                        .removeClass('new-training');
+      //remove unneeded input
+      $('.active-input').remove();
+      //refresh footer
+      trainingsListVC.setFooter();
+    });
+
+};
+trainingsListVC.cancelAddingNewTraining = function(e){
+    $('.new-training').remove();
+};
+(function($){
+  $.fn.outside = function(ename, cb){
+      return this.each(function(){
+          var $this = $(this),
+              self = this;
+
+          $(document).bind(ename, function tempo(e){
+              if(e.target !== self && !$.contains(self, e.target)){
+                  cb.apply(self, [e]);
+                  if(!self.parentNode) $(document.body).unbind(ename, tempo);
+              }
+          });
+      });
+  };
+}(jQuery));
 trainingsListVC.setFooter = function () {
 
     var itemsCount = trainingsListVC.$tableTrainingsContents
@@ -235,4 +351,17 @@ trainingsListVC.trainingContentItemTpl = [
     '</div>'
 ].join("\n");
 
+trainingsListVC.newTrainingInput = [
+  '<div class="training_content-item">',
+      '<div class="training_content-item__row">',
+         '<div class="training_content__col training_content__col-name">',
+            '<span id="name-span" class="training_content-item__col-name--name" style="display:none;"></span> ',
+            '<input id="name-input" class="training_content-item__col-name--name"></input>',
+         '</div>',
+      '</div>',
+      '<div class="training_content-item__row right">',
+      '   <div class="chapters-button">chapters : 0</div>',
+      '</div>',
+  '</div>'
+].join("\n");
 trainingsListVC.init();

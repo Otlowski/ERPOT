@@ -1107,9 +1107,14 @@
     font-weight: 300;
     width: 100%;
 }
+.training_content__col-name input{
+  max-width: 170px;
+      height: 20px;
+}
 .training_content-item__col-name--name {
     font-weight: bold;
 }
+
 .training_content-item__col-name--chapters{
 
 }
