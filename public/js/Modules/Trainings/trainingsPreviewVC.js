@@ -6,7 +6,8 @@ var trainingsPreviewVC = {};
     trainingsPreviewVC.$previewForm       = $("[data-function=preview-form]");
     trainingsPreviewVC.$chaptersContent   = $("[data-function=chapters-content]");
     trainingsPreviewVC.$playChapterButton = $("[data-function=play-chapter]")
-
+    trainingsPreviewVC.$documentsList     = $("[data-function=documents-content]");
+    trainingsPreviewVC.trainingContentId  = 0;
 
     trainingsPreviewVC.trainingsData = {};
     trainingsPreviewVC.showTrainingsDetails = function (trainingData) {
@@ -19,8 +20,8 @@ var trainingsPreviewVC = {};
             $("#data-name").text(trainingData.name);
 
             //Contents Chapters,Documents,Notes
-        var trainingContentsId = trainingData.id;
-  
+        var trainingContentsId = trainingsPreviewVC.trainingContentId = trainingData.id;
+
         var dataParam ={
             trainings_contents__id : trainingContentsId
             };
@@ -84,7 +85,7 @@ var trainingsPreviewVC = {};
         clicked.addClass("selected");
 
         trainingsPreviewVC.$chaptersContent.show();
-
+          trainingsPreviewVC.$documentsList.hide();
     };
 
     trainingsPreviewVC.onDocumentsListClick = function(){
@@ -96,8 +97,51 @@ var trainingsPreviewVC = {};
         clicked.addClass("selected");
 
         trainingsPreviewVC.$chaptersContent.hide();
+        trainingsPreviewVC.$documentsList.show();
+
+        trainingsPreviewVC.getDocumentsList();
     };
 
+    trainingsPreviewVC.getDocumentsList = function(){
+      
+      var dataParams =
+              {
+                  'trainings_contents__id': trainingsPreviewVC.trainingContentId,
+              };
+
+      apiClient.post("/trainings/listTrainingsDocuments", dataParams, function (response) {
+      // if error
+      if ("success" != response.status) {
+          showAlert(response);
+          return;
+      }
+      // if success, clean content
+      var documentsList = trainingsPreviewVC.chaptersList = response.message;
+
+      trainingsPreviewVC.appendDocuments(documentsList);
+      });
+
+    };
+    trainingsPreviewVC.appendDocuments = function(documentsList){
+      var documentsTable = $('#documents-table');
+
+          documentsTable.html('');
+
+      documentsList.forEach(function(el){
+        var tableRow  = $(trainingsPreviewVC.documentTableRowTpl);
+            tableRow.find('#name').text(el.name);
+            tableRow.find('#description').text(el.description);
+            tableRow.find('#created_at').text(el.created_at);
+
+            tableRow.find('.download-button').on('click', function(e){
+              downloader.downloadFile('/download/'+el.name);
+            });
+
+            documentsTable.append(tableRow);
+      });
+
+
+    };
     trainingsPreviewVC.onTrainingNotesClick = function(){
 
         $('[data-toggle=notes]').removeClass("selected");
@@ -108,7 +152,14 @@ var trainingsPreviewVC = {};
 
         trainingsPreviewVC.$chaptersContent.hide();
     };
-
+    trainingsPreviewVC.documentTableRowTpl = [
+      '<tr>',
+      '    <td id="name"></td>',
+      '    <td id="description"></td>',
+      '    <td id="download"><a class="download-button"><button type="button" class="btn btn-primary">Download</button></a></td>',
+      '    <td id="created_at"></td>',
+      '</tr>'
+    ].join("\n");
     trainingsPreviewVC.trainingsChapterItemTpl = [
         '<div class="container">',
         '<div class="chapter-item">',

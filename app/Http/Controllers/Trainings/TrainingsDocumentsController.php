@@ -14,45 +14,44 @@ class TrainingsDocumentsController extends Controller
         'moduleId'      => null,
         'moduleCode'    => null
     ];
-    
+
     public function listTrainingsDocuments(Request $request) {
-        
+
         try {
-            
+
             $parameters = $request->all();
-            
+
             $validator = Validator::make($request->all(), [
-                'ids'                            =>   'array',
-                'ids.*.id'                       =>   'integer'
+                'trainings_contents__id'  =>   'integer'
             ]);
-            
+
             if ($validator->fails()) {
                 return self::responseJson($validator->errors()->all(), 'error');
             }
-            
+
             $query = TrainingDocument::whereNull('deleted_at');
 
-            if (isset($parameters['ids'])) {
-                $query->whereIn('id', $parameters['ids']);
+            if (isset($parameters['trainings_contents__id'])) {
+                $query->where('trainings_contents__id', $parameters['trainings_contents__id']);
             }
-            
-            $trainingsDocuments = $query->get();
 
+            $trainingsDocuments = $query->get();
+            // dd($trainingsDocuments);
             if (!$trainingsDocuments) {
                 return self::responseJson('Table "trainings_documents" is empty', 'error');
             }
 
             $response = $trainingsDocuments;
-            
+
             return self::responseJson($response);
         } catch (Exception $ex) {
             return self::responseJson($ex->getMessage(), 'error');
         }
     }
-    
+
     public function addTrainingDocument(Request $request) {
-        
-        try {    
+
+        try {
 
             $parameters = $request->all();
 
@@ -67,7 +66,7 @@ class TrainingsDocumentsController extends Controller
             if ($validator->fails()) {
                 return self::responseJson($validator->errors()->all(), 'error');
             }
-            
+
             $created = [];
             \DB::beginTransaction();
             foreach($parameters['create'] as $index => $param) {
@@ -76,23 +75,23 @@ class TrainingsDocumentsController extends Controller
                 $created[] = $trainingDocument;
             }
             \DB::commit();
-            
+
             $response = [
                 'created' => $created,
                 'deleted' => []
             ];
-            
+
             return self::responseJson($response);
-            
+
         } catch (Exception $ex) {
             \DB::rollback();
             return self::responseJson($ex->getMessage(), 'error');
         }
     }
-    
+
     public function updateTrainingDocument(Request $request) {
-        
-        try {    
+
+        try {
 
             $parameters = $request->all();
 
@@ -108,7 +107,7 @@ class TrainingsDocumentsController extends Controller
             if ($validator->fails()) {
                 return self::responseJson($validator->errors()->all(), 'error');
             }
-            
+
             $updated = [];
             \DB::beginTransaction();
             foreach($parameters['create'] as $index => $param) {
@@ -117,22 +116,22 @@ class TrainingsDocumentsController extends Controller
                 $updated[] = $trainingDocument;
             }
             \DB::commit();
-            
+
             $response = [
                 'updated'   =>  $updated
             ];
-            
+
             return self::responseJson($response);
-            
+
         } catch (Exception $ex) {
             \DB::rollback();
             return self::responseJson($ex->getMessage(), 'error');
         }
     }
-    
+
     public function deleteTrainingDocument(Request $request) {
-        
-        try {    
+
+        try {
 
             $parameters = $request->all();
 
@@ -144,7 +143,7 @@ class TrainingsDocumentsController extends Controller
             if ($validator->fails()) {
                 return self::responseJson($validator->errors()->all(), 'error');
             }
-            
+
             $deleted = [];
             \DB::beginTransaction();
             foreach($parameters['delete'] as $index => $param) {
@@ -161,12 +160,23 @@ class TrainingsDocumentsController extends Controller
                 'created'   =>  [],
                 'deleted'   =>  $deleted
             ];
-            
+
             return self::responseJson($response);
-            
+
         } catch (Exception $ex) {
             \DB::rollback();
             return self::responseJson($ex->getMessage(), 'error');
         }
     }
+
+   public function downloadDocument($filename) {
+
+        try {
+            $path = config('app_storage.documents_path');
+            return response()->download($path.$filename, $filename);
+
+        } catch (Exception $e) {
+            return self::responseJson($ex->getMessage(), 'error');
+        }
+   }
 }

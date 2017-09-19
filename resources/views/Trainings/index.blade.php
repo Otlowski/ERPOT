@@ -191,6 +191,7 @@
 //        console.info( sessionHash );
 //    });
 //</script>-->
+<script src="/js/AppCore/Libraries/downloader.js?rev={{ \Config::get('revision.rev') }}" type="text/javascript"></script>
 <script src="/js/AppCore/Libraries/errors.js?rev={{ \Config::get('revision.rev') }}" type="text/javascript"></script>
 <script src="/js/Modules/Trainings/trainingsPreviewVC.js?rev={{ \Config::get('revision.rev') }}" type="text/javascript"></script>
 <script src="/js/Modules/Trainings/trainingsListVC.js?rev={{ \Config::get('revision.rev') }}" type="text/javascript"></script>

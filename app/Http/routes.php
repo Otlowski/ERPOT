@@ -35,6 +35,7 @@ Route::group([ 'prefix' => 'developers', 'middlewareGroups' => ['web']], functio
 
 Route::get('/login',                                        ['uses' => 'UsersViewsController@indexLogin']);
 Route::get('/register',                                     ['uses' => 'UsersViewsController@indexRegister']);
+Route::get('/download/{filename}',                          ['uses' => 'Trainings\TrainingsDocumentsController@downloadDocument']);
 
 Route::group(
              ['middleware' => 'web'], function() {
