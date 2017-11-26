@@ -62,78 +62,7 @@
                     </div>
 
                     <div class="groups-list__content" data-function="groups-list__groups">
-                        <div class="groups-list__item">
-                            <div class="groups-list__item-content">
-                                <div class="groups-list__item-label">
-                                    <i class="glyphicon glyphicon-folder-open"></i>
-                                </div>
-                                <div class="groups-list__item-text">Siemens NX</div>
-                            </div>
-                        </div>
-                        <div class="groups-list__item">
-                            <div class="groups-list__item-content">
-                                <div class="groups-list__item-label">
-                                    <i class="glyphicon glyphicon-folder-open"></i>
-                                </div>
-                                <div class="groups-list__item-text">Siemens TC</div>
-                            </div>
-                        </div>
-                        <div class="groups-list__item">
-                            <div class="groups-list__item-content">
-                                <div class="groups-list__item-label">
-                                    <i class="glyphicon glyphicon-folder-open"></i>
-                                </div>
-                                <div class="groups-list__item-text">AutoCAD</div>
-                            </div>
-                        </div>
-                        <div class="groups-list__item">
-                            <div class="groups-list__item-content">
-                                <div class="groups-list__item-label">
-                                    <i class="glyphicon glyphicon-folder-open"></i>
-                                </div>
-                                <div class="groups-list__item-text">SAP Business One</div>
-                            </div>
-                        </div>
-                        <div class="groups-list__item">
-                            <div class="groups-list__item-content">
-                                <div class="groups-list__item-label">
-                                    <i class="glyphicon glyphicon-folder-open"></i>
-                                </div>
-                                <div class="groups-list__item-text">SAP Pronovia</div>
-                            </div>
-                        </div>
-                        <div class="groups-list__item">
-                            <div class="groups-list__item-content">
-                                <div class="groups-list__item-label">
-                                    <i class="glyphicon glyphicon-folder-open"></i>
-                                </div>
-                                <div class="groups-list__item-text">MSH Processes</div>
-                            </div>
-                        </div>
-                        <div class="groups-list__item">
-                            <div class="groups-list__item-content">
-                                <div class="groups-list__item-label">
-                                    <i class="glyphicon glyphicon-folder-open"></i>
-                                </div>
-                                <div class="groups-list__item-text">MSH HQM</div>
-                            </div>
-                        </div>
-                        <div class="groups-list__item">
-                            <div class="groups-list__item-content">
-                                <div class="groups-list__item-label">
-                                    <i class="glyphicon glyphicon-folder-open"></i>
-                                </div>
-                                <div class="groups-list__item-text">MSH Materials</div>
-                            </div>
-                        </div>
-                        <div class="groups-list__item">
-                            <div class="groups-list__item-content">
-                                <div class="groups-list__item-label">
-                                    <i class="glyphicon glyphicon-folder-open"></i>
-                                </div>
-                                <div class="groups-list__item-text">MSE Introduction</div>
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
             </div>

@@ -62,7 +62,7 @@
                         <span class="dashboard-menu__text">Users</span>
                     </a>
                 </li>
-                <li class="dashboard-menu__item">
+                <!-- <li class="dashboard-menu__item">
                     <a href="/settings" class="dashboard-menu__link">
                             <span class="dashboard-menu__square">
                                 <svg class="dashboard-menu__icon icon icon--x-large icon--colored">
@@ -71,7 +71,7 @@
                             </span>
                         <span class="dashboard-menu__text">Settings</span>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>

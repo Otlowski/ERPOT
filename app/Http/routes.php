@@ -21,7 +21,6 @@ use App\Http\Controllers\ApiClient\ApiClientController;
 //Route::get('/', function() {
 //    return view('welcome');
 //});
-// Route::get('/', ['uses' => 'UsersViewsController@indexDashboard', 'middleware'=>'auth']);
 
 /* App :: API Test enviroment (Test client) */
 Route::group([ 'prefix' => 'developers', 'middlewareGroups' => ['web']], function() {
@@ -31,14 +30,14 @@ Route::group([ 'prefix' => 'developers', 'middlewareGroups' => ['web']], functio
 });
 
 /* [GET] Webpages */
-// Route::auth();
 
 Route::get('/login',                                        ['uses' => 'UsersViewsController@indexLogin']);
+//Route::get('/login',                                        ['uses' => 'UsersViewsController@indexLogin']);
 Route::get('/register',                                     ['uses' => 'UsersViewsController@indexRegister']);
 Route::get('/download/{filename}',                          ['uses' => 'Trainings\TrainingsDocumentsController@downloadDocument']);
 
 Route::group(
-             ['middleware' => 'web'], function() {
+             ['middleware' => ['web']], function() {
 
     Route::get('/',                                             ['uses' => 'UsersViewsController@indexDashboard']);
     Route::get('/dashboard',                                    ['uses' => 'UsersViewsController@indexDashboard']);
@@ -245,6 +244,6 @@ Route::group(['middlewareGroups' => ['web']], function() {
     Route::post('chat',                                               ['uses' => 'Chat\ChatController@showChat']);
 });
 
-Route::auth();
+//Route::auth();
 
 Route::get('/home', 'HomeController@index');

@@ -685,7 +685,7 @@ trainingEventAddVC.onAddEventClick = function()
             'start_at'            :   eventStartAt,
             'finish_at'           :   eventFinishAt
          };
-         console.log("eventStartAt: ",eventStartAt);
+
     //prepare all data for request
     var dataParams = 
         { 
@@ -706,7 +706,7 @@ trainingEventAddVC.onAddEventClick = function()
             modal.modal("hide");
         
         var createdEvent = response.message;
-        console.log("Check Object which has been created: ", createdEvent);
+
     });
     $('[data-function=calendar-content]').find('.calendar__day-number').removeClass('calendar__day__selected');
     $('[data-function=calendar-content]').find('.calendar__day').find('[date='+eventStartAt.substr(0,10)+']').addClass('calendar__day__selected');

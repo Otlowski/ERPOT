@@ -4,7 +4,6 @@ namespace App\Models\Trainings;
 
 use Illuminate\Database\Eloquent\Model;
 use \Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Questionnaires\Questionnaire;
 use App\Models\Trainings\TrainingDocument;
 use App\Models\Trainings\TrainingChapter;
 use App\Models\Trainings\TrainingEvent;
@@ -34,11 +33,7 @@ class TrainingContent extends Model
     /*
      * Relations
      */
-    
-    public function questionnaire() {
-        return $this->hasOne(Questionnaire::class, 'id');
-    }
-    
+      
      public function trainingGroup() {
         return $this->belongsTo(TrainingGroup::class, 'id', 'trainings_groups__id');
     }
@@ -55,7 +50,4 @@ class TrainingContent extends Model
         return $this->hasMany(TrainingChapter::class, 'trainings_contents__id', 'id');
     }
     
-    /*
-     * Helpers
-     */
 }

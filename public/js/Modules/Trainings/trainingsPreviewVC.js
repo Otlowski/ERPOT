@@ -5,8 +5,9 @@ var trainingsPreviewVC = {};
     trainingsPreviewVC.$alertForm         = $("[data-function=alert-form]");
     trainingsPreviewVC.$previewForm       = $("[data-function=preview-form]");
     trainingsPreviewVC.$chaptersContent   = $("[data-function=chapters-content]");
-    trainingsPreviewVC.$playChapterButton = $("[data-function=play-chapter]")
+    trainingsPreviewVC.$playChapterButton = $("[data-function=play-chapter]");
     trainingsPreviewVC.$documentsList     = $("[data-function=documents-content]");
+    trainingsPreviewVC.$notesList         = $("[data-function=notes-content]");
     trainingsPreviewVC.trainingContentId  = 0;
 
     trainingsPreviewVC.trainingsData = {};
@@ -35,14 +36,27 @@ var trainingsPreviewVC = {};
                                     .click(trainingsPreviewVC.onDocumentsListClick);
         $('[data-toggle=notes]')    .unbind("click")
                                     .click(trainingsPreviewVC.onTrainingNotesClick);
+                            
+        /*Clean forms*/
+        var documentsTable = $('#documents-table');
+            documentsTable.html('');
+        var notesListContent = $('[data-function=notes-content]').find('.cards');
+            notesListContent.html('');
+        
+        $('[data-toggle=chapters]').trigger('click');
     };
-    trainingsPreviewVC.onTrainingChapterVideoClick = function(){
-        var trainingChapterId = $(this).attr("data-training-chapter-id");
-        var parrentObject     = $(this).parent();
-        var chapterVideoContent  = parrentObject.find('.collapse');
-            chapterVideoContent.slideToggle(500, function(){
+    /*Trainings Chapters - methods*/
+    trainingsPreviewVC.onTrainingChaptersClick = function(){
 
-            });
+        $('[data-toggle=notes]').removeClass("selected");
+        $('[data-toggle=documents]').removeClass("selected");
+        $('[data-toggle=chapters]').removeClass("selected");
+        clicked = $(this);
+        clicked.addClass("selected");
+
+        trainingsPreviewVC.$chaptersContent.show();
+        trainingsPreviewVC.$notesList.hide();
+        trainingsPreviewVC.$documentsList.hide();
     };
     trainingsPreviewVC.createChaptersItems = function(dataParam){
         apiClient.post("/trainings/listTrainingsChapters", dataParam, function (response) {
@@ -75,19 +89,15 @@ var trainingsPreviewVC = {};
             });
         });
     };
+    trainingsPreviewVC.onTrainingChapterVideoClick = function(){
+        var trainingChapterId = $(this).attr("data-training-chapter-id");
+        var parrentObject     = $(this).parent();
+        var chapterVideoContent  = parrentObject.find('.collapse');
+            chapterVideoContent.slideToggle(500, function(){
 
-    trainingsPreviewVC.onTrainingChaptersClick = function(){
-
-        $('[data-toggle=notes]').removeClass("selected");
-        $('[data-toggle=documents]').removeClass("selected");
-        $('[data-toggle=chapters]').removeClass("selected");
-        clicked = $(this);
-        clicked.addClass("selected");
-
-        trainingsPreviewVC.$chaptersContent.show();
-          trainingsPreviewVC.$documentsList.hide();
+            });
     };
-
+    /*Trainings Documents methods*/
     trainingsPreviewVC.onDocumentsListClick = function(){
 
         $('[data-toggle=notes]').removeClass("selected");
@@ -97,11 +107,11 @@ var trainingsPreviewVC = {};
         clicked.addClass("selected");
 
         trainingsPreviewVC.$chaptersContent.hide();
-        trainingsPreviewVC.$documentsList.show();
+        trainingsPreviewVC.$notesList.hide();
+        trainingsPreviewVC.$documentsList.show();    
 
         trainingsPreviewVC.getDocumentsList();
     };
-
     trainingsPreviewVC.getDocumentsList = function(){
       
       var dataParams =
@@ -116,7 +126,7 @@ var trainingsPreviewVC = {};
           return;
       }
       // if success, clean content
-      var documentsList = trainingsPreviewVC.chaptersList = response.message;
+      var documentsList = trainingsPreviewVC.documentsList = response.message;
 
       trainingsPreviewVC.appendDocuments(documentsList);
       });
@@ -124,7 +134,6 @@ var trainingsPreviewVC = {};
     };
     trainingsPreviewVC.appendDocuments = function(documentsList){
       var documentsTable = $('#documents-table');
-
           documentsTable.html('');
 
       documentsList.forEach(function(el){
@@ -142,6 +151,7 @@ var trainingsPreviewVC = {};
 
 
     };
+    /*Trainings Notes methods*/
     trainingsPreviewVC.onTrainingNotesClick = function(){
 
         $('[data-toggle=notes]').removeClass("selected");
@@ -149,14 +159,104 @@ var trainingsPreviewVC = {};
         $('[data-toggle=chapters]').removeClass("selected");
         clicked = $(this);
         clicked.addClass("selected");
-
+        
+        trainingsPreviewVC.$documentsList.hide();
         trainingsPreviewVC.$chaptersContent.hide();
+        trainingsPreviewVC.$notesList.show();
+        trainingsPreviewVC.getNotesList();
+         
+         
     };
+    trainingsPreviewVC.getNotesList =  function(){
+        
+        
+        var trainingsContentId = trainingsPreviewVC.trainingContentId;
+        
+        var dataParam = {
+            'trainings_contents__id' : trainingsContentId
+        };
+        
+        apiClient.post("/trainings/listTrainingsNotes", dataParam, function (response) {
+            
+            // if error
+            if ("success" != response.status) {
+                showAlert(response);
+                return;
+            }
+            // if success, clean content
+            var notesList = response.message;
+            //append notes
+            trainingsPreviewVC.appendTrainingsNotes(notesList);
+            //start animation
+            trainingsPreviewVC.notesAnimation();
+           
+      });
+      
+        
+ 
+    };
+    trainingsPreviewVC.appendTrainingsNotes = function(notesList){
+        var notesListContent = $('[data-function=notes-content]').find('.cards');
+            notesListContent.html('');
+        
+            notesList.forEach(function(el){
+                var noteCardTemplate = $(trainingsPreviewVC.trainingCardTpl);
+                    noteCardTemplate.find("#author").text(el.author);
+                    noteCardTemplate.find("#created_at").text(el.created_at);
+                    noteCardTemplate.find("#note").text(el.note);
+                    
+                    notesListContent.append(noteCardTemplate);
+            });
+        
+    };
+    trainingsPreviewVC.notesAnimation = function(){
+        $.fn.commentCards = function(){
+
+            return this.each(function(){
+
+              var $this = $(this),
+                  $cards = $this.find('.card'),
+                  $current = $cards.filter('.card--current'),
+                  $next;
+
+              $cards.on('click',function(){
+                if ( !$current.is(this) ) {
+                  $cards.removeClass('card--current card--out card--next');
+                  $current.addClass('card--out');
+                  $current = $(this).addClass('card--current');
+                  $next = $current.next();
+                  $next = $next.length ? $next : $cards.first();
+                  $next.addClass('card--next');
+                }
+              });
+
+              if ( !$current.length ) {
+                $current = $cards.last();
+                $cards.first().trigger('click');
+              }
+
+              $this.addClass('cards--active');
+
+            });
+
+          };
+
+            $('.cards').commentCards();
+    };
+    /*Templates*/
+    trainingsPreviewVC.trainingCardTpl = [
+        '<li class="card">',
+        '   <h1 id="author"></h1>',
+        '   <p id="created_at"></p>',
+        '   <p id="note">Lorem ipsum dolor ibendulast rhoncornaque.</p>',
+        '</li>'
+    ].join("\n");        
+    
     trainingsPreviewVC.documentTableRowTpl = [
       '<tr>',
       '    <td id="name"></td>',
       '    <td id="description"></td>',
-      '    <td id="download"><a class="download-button"><button type="button" class="btn btn-primary">Download</button></a></td>',
+      '    <td id="download"><a class="download-button"><button type="button" class="btn-download btn btn-primary">Download</button></a></td>',
       '    <td id="created_at"></td>',
       '</tr>'
     ].join("\n");

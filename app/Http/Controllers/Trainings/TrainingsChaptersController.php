@@ -169,4 +169,4 @@ class TrainingsChaptersController extends Controller
             return self::responseJson($ex->getMessage(), 'error');
         }
     }
-}
+}   

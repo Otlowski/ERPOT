@@ -34,10 +34,10 @@ class DatabaseSeeder extends Seeder
         $this->call(TrainingsGroupsTableSeeder::class);
         $this->call(TrainingsContentsTableSeeder::class);
         // $this->call(TrainingsTableSeeder::class);
-        // $this->call(TrainingsNotesTableSeeder::class);
+        $this->call(TrainingsNotesTableSeeder::class);
         // $this->call(TrainingsLeadresTableSeeder::class);
         // $this->call(TrainingsUsersTableSeeder::class);
-        // $this->call(TrainingsDocumentsTableSeeder::class);
+         $this->call(TrainingsDocumentsTableSeeder::class);
         for($i = 0 ; $i < $variable ; $i++){
         $this->call(TrainingsChaptersTableSeeder::class);
         }

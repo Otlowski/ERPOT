@@ -139,7 +139,6 @@ trainingEventEditVC.changeEventDates = function()
     })
             .on('change.dp', function (e) {
                 trainingEventEditVC.finishDate = $(this).val();
-                console.log(trainingEventEditVC.finishDate);
             });
 };
 /*Rename Event method*/   
@@ -764,7 +763,7 @@ trainingEventEditVC.onEditEventClick = function (loading)
                 'start_at'             : eventStartAt,
                 'finish_at'            : eventFinishAt
             };
-console.log("finish at", eventFinishAt);
+
     //prepare all data for request
     var dataParams =
             {

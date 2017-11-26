@@ -18,8 +18,9 @@ class TrainingNote extends Model
     protected $dates = ['deleted_at'];
     
     protected $fillable = [
-        'trainings__object_id', 
-        'note'
+        'trainings_contents__id', 
+        'note',
+        'author'
     ];
     
     protected $guarded = [

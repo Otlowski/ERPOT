@@ -22,8 +22,7 @@ class TrainingsNotesController extends Controller
             $parameters = $request->all();
             
             $validator = Validator::make($request->all(), [
-                'ids'                            =>   'array',
-                'ids.*.id'                       =>   'integer'
+                'trainings_contents__id'         =>   'integer',
             ]);
             
             if ($validator->fails()) {
@@ -32,8 +31,8 @@ class TrainingsNotesController extends Controller
             
             $query = TrainingNote::whereNull('deleted_at');
             
-            if (isset($parameters['ids'])) {
-                $query->whereIn('id', $parameters['ids']);
+            if (isset($parameters['trainings_contents__id'])) {
+                $query->where('trainings_contents__id', $parameters['trainings_contents__id']);
             }
             
             $trainingsNotes = $query->get();

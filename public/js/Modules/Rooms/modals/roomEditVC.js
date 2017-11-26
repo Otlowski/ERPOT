@@ -18,7 +18,6 @@ roomDetailsVC.initView = function (dataParam) {
 
         var roomData = response.message;
         var $modal = roomDetailsVC.modal;
-//console.log
         $modal.find('input[type=text]').val('');
 
         roomData.forEach(function (room, index) {
@@ -59,8 +58,6 @@ roomDetailsVC.onEditSaveClick = function (e) {
 
     var roomObjectId = $modal.find('input[name=roomObjectId]').val();
     var roomGroupId = $modal.find('input[name=roomGroupId]').val();
-    console.log('onEditSaveClick---Param-roomObjectId');
-    console.log(roomObjectId);
     var dataParametrs = {
 //            rooms_groups__id      :   roomGroupId,    
 //            number                :   roomDetailsVC.modal.find("[data=roomNumber]").val(),
@@ -86,7 +83,7 @@ roomDetailsVC.onEditSaveClick = function (e) {
 
         roomDataCreated.forEach(function (roomItem, index) {
             var $roomItem = roomsVC.$tableContent.find('[data-room-object_id=' + roomItem.object_id + ']');
-            console.log($roomItem);
+
             // refresh data on main list of contracts
             var $roomRow = roomsVC.createRoomItem(roomItem);
             $roomItem.replaceWith($roomRow);
@@ -104,7 +101,7 @@ roomDetailsVC.onEditSaveClick = function (e) {
 roomDetailsVC.onEditDeleteClick = function () {
 
     var roomObjectId = roomsVC.$tableContent.find('.selected').attr("data-room-object_id");
-//    console.log(roomObjectId);
+
     var dataParam = {
         object_id: roomObjectId
     };
@@ -113,7 +110,7 @@ roomDetailsVC.onEditDeleteClick = function () {
             {
                 "delete": [dataParam]
             };
-    console.log(deleteData);
+
     apiClient.post("/rooms/deleteRoom", deleteData, function (response) {
         if ("success" !== response.status) {
             showModal(response);

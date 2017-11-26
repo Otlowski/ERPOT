@@ -11,7 +11,6 @@ var roomAddVC = {};
     
     roomAddVC.onRoomAddClick = function(e) {
         var $trigger = $(this);
-        console.log('trigger'+this);
         roomAddVC.initView($trigger,e);
        
     };
@@ -24,7 +23,6 @@ var roomAddVC = {};
             // get and add contractors to dropdown menu
             apiClient.post('/rooms/listRoomsGroups',{},function(response){
                 var roomsGroupsList = response.message;
-                    console.log(roomsGroupsList);
                     roomAddVC.groupsList = roomsGroupsList;
                 // add contractors to dropdown menu
                 var groupsList = $('[data-function=groups-list]').find('.dropdown-menu');
@@ -63,7 +61,6 @@ var roomAddVC = {};
     
     roomAddVC.addRoom = function(e) {
         var button = $(this);
-        console.log('addRoom');
 //            disableButton(button);
         var $modal = roomAddVC.$modal;
         var groupId = $modal.find('[data-function=groups-list]')
@@ -83,11 +80,9 @@ var roomAddVC = {};
                     "create" : [dataParam]
                 };
       
-        console.log(sendData);
         apiClient.post("/rooms/addRoom",sendData,function(response){
             
             if('success' !== response.status) { showAlert(response); return; }
-            console.log('responseeeee'+response);
             $modal.modal("hide");
             
             roomsVC.initView();

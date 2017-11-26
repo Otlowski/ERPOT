@@ -8,7 +8,6 @@ groups.$tableContent    = $("[data-function=groups-list__content]");
 
 /* Init view */
 groups.init = function () {
-    console.log('set all items');
     groups.setRoomsGroupsList();
 };
 
@@ -33,7 +32,6 @@ groups.setRoomsGroupsList = function () {
         if ("success" !== response.status) { showModal(response); return; }
         
         var roomsGroupsList = groups.roomGroupsList = response.message;
-        console.log(roomsGroupsList);
             
             // display all rooms
             roomsGroupsList.forEach(function (roomGroup, index) {
@@ -71,7 +69,6 @@ groups.onRoomGroupClick = function(e) {
 
 groups.onRoomGroupDoubleClick = function(e)
 {
-    console.log('DOUBLE CLICK ON ROOM GROUP');
     groups.$tableContent.find('.groups-list__item').removeClass('edit-group');
     var $group = $(this);
         $group.addClass('edit-group');

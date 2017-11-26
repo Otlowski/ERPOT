@@ -36,6 +36,7 @@ class UsersTableSeeder extends Seeder {
                 'users_groups__id' =>      $randId,
                 'username'         =>      $faker->unique()->username,
                 'email'            =>      $faker->unique()->email,
+                'password'         =>      hash('sha512', $faker->password),
                 'password'         =>      $faker->password,
                 'firstname'        =>      $faker->firstName,
                 'lastname'         =>      $faker->lastName,

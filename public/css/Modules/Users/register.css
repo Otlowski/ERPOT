@@ -124,7 +124,7 @@ body {
     position: relative;
     display: inline-block;
     width: 420px;
-    height: 480px;
+    height: 420px;
     margin-top: 30px;
     background: rgba(255,255,255,1);
     -webkit-border-radius: 6px;
@@ -148,7 +148,7 @@ body {
     right: 0px;
     height: 80px;
     z-index: 10; 
-    background: url('../../../static/img/App/t-media-logo.png') no-repeat center center;
+    background: url('../../../static/img/App/erpot-logo.png') no-repeat center center;
 /*    background-position: -230px -12px; width: 93px; height: 93px;
 	margin: auto;*/
 }
@@ -162,7 +162,13 @@ body {
     z-index: 9;
     background: url('../../../static/img/register/line-gray.png') no-repeat center center;
 }*/
-
+.box-register button.btn {
+    background-color: #0a2644;
+    border-color: #0a2644;
+}
+.box-register button.btn:hover {
+    opacity: 0.8;
+}
 .box-register__form {
     position:relative;
     display: block;
@@ -173,6 +179,7 @@ body {
     font-size: 14px;
     color: #A9A9A9;
 }
+
 
 .box-register__button-register {
     position: absolute; 
@@ -193,8 +200,8 @@ body {
     font-size: 16px;
     font-weight: normal;
     color: #000;  
-    border:0.5px solid #A9A9A9;
-    border-radius: 5px;
+/*    border:0.5px solid #A9A9A9;
+    border-radius: 5px;*/
     outline: none;
 }
 .box-register__form__input::-webkit-input-placeholder,

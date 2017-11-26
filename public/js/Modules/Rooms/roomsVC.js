@@ -68,8 +68,6 @@ roomsVC.searchRooms = function(search) {
         var $roomsList =  $("[data-function=room-list]");
         // validation
             search = typeof search !== 'undefined' ? search.toLowerCase() : '';
-            console.log('SEARCHROOMS');
-            console.log(search);
         // if empty search value
         if(search === '') {
             $roomsList.find(".component.tablecell").show();
@@ -80,16 +78,13 @@ roomsVC.searchRooms = function(search) {
         if(searchArray[searchArray.length - 1] === '') {
             delete searchArray[searchArray.length - 1];
         }
-        console.log(searchArray);
+
         $roomsList.find(".component.tablecell").hide();
 //        
         var rooms = roomsVC.findRoom(searchArray);
-        console.log('check rooms search array returned');
-        console.log(rooms);
+
             rooms.forEach(function(room,index){
                 $roomsList.find('[data-room-object_id='+room.object_id+']').show();
-                console.log('cheack appending to tablecell');
-                console.log($roomsList);
                 
             });
      };
@@ -107,8 +102,7 @@ roomsVC.findRoom = function (searchArray) {
         }
         return show;
     });
-    console.log('return searchResults');
-    console.log(searchResult);
+
     return searchResult;
 };
     
@@ -122,16 +116,13 @@ roomsVC.onRoomClick = function(e) {
             {
                 object_id : roomObjectId
             };
-            console.log('test on Room Click: PAram ---');
-            console.log(dataParam);
            roomDetailsVC.initView(dataParam);
            
     };
 roomsVC.setFooter = function () {
 
     var itemsCount = roomsVC.$tableContent.find(".tablecell").length;
-    console.log('FOOTER - CHECK');
-    console.log(itemsCount);
+
     var footer = $("[data-function=room-list]").find(".items-list__footer").find("div");
     footer.text("Number of rooms: " + itemsCount);
 //    test
