@@ -15,6 +15,7 @@ use App\Models\Users\UserMail;
 use App\Models\Users\UserSession;
 use App\Models\Users\UserRegisterHash;
 use App\Http\Controllers\Users\UsersController;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
@@ -42,7 +43,7 @@ class UsersController extends Controller
             }
 
             $newUser = new User($parameters);
-            $newUser->status = 'inactivated';
+            $newUser->status = 'activated';
             $newUser->is_admin = false;
             $newUser->object_id = $newUser->setObjectId();
             $newUser->password = hash('sha512', $parameters['password']);
@@ -50,8 +51,8 @@ class UsersController extends Controller
             $newUser->save();
 
             // send email to verify
-//            $userRegisterHash = self::sendVerificationMail($newUser);
-                $userRegisterHash = null;
+                // $userRegisterHash = self::sendVerificationMail($newUser);
+            $userRegisterHash = null;
             $response = [
                 'created' => [$newUser, $userRegisterHash],
                 'deleted' => []
@@ -115,52 +116,50 @@ class UsersController extends Controller
     }
 
     public function login(Request $request) {
-
+        
         try {
 
             $parameters = $request->all();
-
             $validator = \Validator::make($request->all(), [
                 'email'              =>      'required|email|exists:users',
                 'password'           =>      'required'
             ]);
-
-            // if ($validator->fails()) {
-            //     return self::responseJson($validator->errors(), 'error');
-            // }
-            // $user = User::where('email', $parameters['email'])->first();
-            dd($request['email'].' '. request['password']);
-            if(Auth::attempt(['email' =>$request['email'],['password'] =>$request['password']]){
-            //     return redirect()->route('dashboard');
-            })else {
-            //
-            // s/    return back();
+            if ($validator->fails()) {
+                return self::responseJson($validator->errors(), 'error');
             }
+            
+             $user = User::where('email', $parameters['email'])->first();
 
-            //
-            //
-            //
-            // if (!$user) {
-            //     return self::responseJson('User not found..', 'error');
+            // var_dump($parameters['email']);
+            // var_dump($parameters['password']);
+            // if(Auth::attempt(['email' =>$request['email'],'password' =>$request['password']])){
+            //    echo 'success';
+            // }else {
+            //     return back();
             // }
-            //
-            // if (!$user->isCorrectPassword($parameters['password'])) {
-            //     return self::responseJson('Incorrect password..', 'error');
-            // }
-            //
-            // if (!$user->isActivated()) {
-            //     return self::responseJson("This account is inactivated.. Check your mailbox and click the link to activate account..", 'error');
-            // }
-            //
-            // // create active session for user
-            // $userSession = UserSession::createUserSession($user);
-            // $user->active_session = $userSession;
-            //
-            // $response = [
-            //     'created' => [$user],
-            //     'deleted' => []
-            // ];
 
+             if (!$user) {
+                 return self::responseJson('User not found..', 'error');
+             }
+            
+             if (!$user->isCorrectPassword($parameters['password'])) {
+                 return self::responseJson('Incorrect password..', 'error');
+             }
+            
+             if (!$user->isActivated()) {
+                 return self::responseJson("This account is inactivated.. Check your mailbox and click the link to activate account..", 'error');
+             }
+            
+             // create active session for user
+             $userSession = UserSession::createUserSession($user);
+             $user->active_session = $userSession;
+            
+             $response = [
+                 'created' => [$user],
+                 'deleted' => []
+             ];
+
+             return self::responseJson($response);
 
         } catch(Excaption $ex) {
             return self::responseJson($ex->getMessage(), 'error');
@@ -538,7 +537,7 @@ class UsersController extends Controller
             return $this->responseJson($ex->getMessage(), 'error', 500);
         }
     }
-        public function detailsUser(Request $request) {
+    public function detailsUser(Request $request) {
 
         try {
 

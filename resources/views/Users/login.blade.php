@@ -25,13 +25,11 @@
                 <!-- <h1>Erpot</h1> -->
             </div>
             <div class="box-login__form">
-              <form action="{{route('login')}}" method="post">
                 <input type="email" name="email" placeholder="Enter your e-mail" class="box-login__form__input"><br>
                 <input type="password" id="password" name="password" placeholder="Password" class="box-login__form__input"><br>
                 <div class="box-login__form__line-gray--down"></div>
-                <button class="btn btn-block btn-danger" type="submit" data-function="button-login">Login</button>
-                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
-              </form>
+                <button class="btn btn-block btn-danger" data-function="button-login">Login</button>
+                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </div>
             <div class="box-login__links">
                 <div class="box-login__links__item"><a href="/passwordChange">Change your password to Training App.</a></div><br>
@@ -41,19 +39,6 @@
         </div>
     </div>
 </div>
-<!-- <div class="main-footer col">
-    <div class="col-xs-12">
-        <div class="main-footer__links">
-            <div class="main-footer__links__item"><a href="#">Server & system</a></div>-->
-            <!--<div class="main-footer__links__separator"></div>-->
-            <!-- <div class="main-footer__links__item"><a href="#">Marenco Wiki</a></div> -->
-            <!--<div class="main-footer__links__separator"></div>-->
-            <!-- <div class="main-footer__links__item"><a href="mailto:developers@t-media.pl">Developer contact</a></div> -->
-            <!--<div class="main-footer__links__separator"></div>-->
-            <!-- <div class="main-footer__links__item">Copyright &copy <?= date("Y") ?> T-Media</div> -->
-        <!-- </div> -->
-    <!-- </div> -->
-<!-- </div> -->
 @endsection
 
 @section('scripts')

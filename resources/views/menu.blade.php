@@ -73,7 +73,7 @@
                 </div>
                 </a>
             </div>
-            <div class="menu-item">
+            <!-- <div class="menu-item">
                 <a href="#" >
                 <div class="menu-item__content ">
                     <div class="menu-item__icon menu-item__icon--settings col col-20">
@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 </a>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="main-menu__footer">

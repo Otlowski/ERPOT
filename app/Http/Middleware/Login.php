@@ -3,34 +3,24 @@
 namespace App\Http\Middleware;
 
 use Closure, Session, Auth;
+use App\Models\Users\UserSession;
 
-class App {
+class Login {
     
-    /**
-     * The availables languages.
-     *
-     * @array $languages
-     */
-    protected $languages = ['en','de'];
-
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
     
     public function handle($request, Closure $next) {
+        $params = $request->all();
         
-        if (!Session::has('locale')) {
-            Session::put('locale', $request->getPreferredLanguage($this->languages));
+        if( !isset($params['hash'])){
+            return new Response('You are not logged in..', 403);
         }
-        
-        app()->setLocale(Session::get('locale'));
-        
-        if (!Session::has('statut')) {
-            Session::put('statut', Auth::check() ? Auth::user()->role->slug : 'visitor');
+
+        $sessionHash = UserSession::where('hash',$params['hash'])
+                                  ->where('finish_at','>=',date('Y-m-d H:i:s'))
+                                  ->orderBy('created_at',"desc")
+                                  ->first();
+        if(!$sessionHash){
+            return new Response('You are not logged in..', 403);
         }
         
         return $next($request);

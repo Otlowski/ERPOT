@@ -11,6 +11,11 @@ var apiClient = {};
     * @param {function} onSuccess
     */
     apiClient.post = function(requestUrl,requestParams,onSuccess,onError) {
+        
+        if("sessionHash" in localStorage){
+            requestParams.hash = localStorage.getItem('sessionHash');
+        }
+        
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -34,6 +39,7 @@ var apiClient = {};
     * @param {function} onSuccess
     */
     apiClient.get = function(requestUrl,onSuccess,onError) {
+        
             onSuccess = typeof onSuccess === 'undefined' ? this.onSuccessDefault : onSuccess;
             onError = typeof onError === 'undefined' ? this.onErrorDefault : onError;
             $.ajax({
